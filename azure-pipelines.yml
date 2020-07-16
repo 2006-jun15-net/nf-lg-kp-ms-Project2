@@ -15,6 +15,13 @@ jobs:
     vmImage: 'ubuntu-latest'
 
   steps:
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'sonarcloud nf-lg-kp-ms'
+      organization: '2006-jun15-net'
+      scannerMode: 'MSBuild'
+      projectKey: '2006-jun15-net_nf-lg-kp-ms-Project2'
+      projectName: 'nf-lg-kp-ms-Project2'
 
   - script: dotnet build -c Release
     displayName: dotnet build
@@ -27,7 +34,7 @@ jobs:
       projects: '$(solutionPath)'
       arguments: '-c Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover'
       testRunTitle: 'ubuntu'
-      
+ 
   - task: PublishCodeCoverageResults@1
     displayName: 'publish code coverage'
     inputs:
@@ -35,6 +42,10 @@ jobs:
       summaryFileLocation: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
       failIfCoverageEmpty: true
 
+  - task: SonarCloudAnalyze@1
+  - task: SonarCloudPublish@1
+    inputs:
+      pollingTimeoutSec: '300'
       
   - script: dotnet publish -c Release -o ../publish
     displayName: dotnet publish
