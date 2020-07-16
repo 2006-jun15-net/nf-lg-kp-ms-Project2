@@ -1,19 +1,43 @@
 # Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
 
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+pr:
+- master
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+  solutionPath: TheHub 
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+jobs:
+- job: build_linux
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  steps:
+
+  - script: dotnet build -c Release
+    displayName: dotnet build
+    workingDirectory: $(solutionPath)
+
+  - task: DotNetCoreCLI@2
+    displayName: dotnet test
+    inputs:
+      command: 'test'
+      projects: '$(solutionPath)'
+      arguments: '-c Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover'
+      testRunTitle: 'ubuntu'
+      
+  - task: PublishCodeCoverageResults@1
+    displayName: 'publish code coverage'
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
+      failIfCoverageEmpty: true
+
+      
+  - script: dotnet publish -c Release -o ../publish
+    displayName: dotnet publish
+    workingDirectory: $(solutionPath)
+
+
