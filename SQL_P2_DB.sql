@@ -12,8 +12,8 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Following (
-    UserIdOne INT IDENTITY(1,1) NOT NULL,
-    UserIdTwo INT IDENTITY(1,1) NOT NULL,
+    UserIdOne INT NOT NULL,
+    UserIdTwo INT NOT NULL,
     CONSTRAINT PK_UserIdOne_UserIdTwo PRIMARY KEY(UserIdOne, UserIdTwo),
     CONSTRAINT FK_Following_UserId_Users FOREIGN KEY (UserIdTwo) 
         REFERENCES Users (UserId) ON DELETE CASCADE
@@ -70,13 +70,11 @@ CREATE TABLE Notifications (
     NotificationId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     PostID INT NOT NULL,
     Status BIT NOT NULL,
-    Reciver INT NOT NULL,
-    Sender INT NOT NULL,
+    ReciverId INT NOT NULL,
+    SenderId INT,
     NotificationType NVARCHAR(255) NOT NULL,
-    CONSTRAINT FK_Notificatoins_Reciver_UserId_Users FOREIGN KEY (Reciver) 
+    CONSTRAINT FK_Notificatoins_Reciver_UserId_Users FOREIGN KEY (ReciverId) 
         REFERENCES Users (UserId) ON DELETE CASCADE,
-    CONSTRAINT FK_Notifications_Sender_UserId_Users FOREIGN KEY (Sender) 
-        REFERENCES Users (UserId) ON DELETE CASCADE
+    CONSTRAINT FK_Notifications_Sender_UserId_Users FOREIGN KEY (SenderId) 
+        REFERENCES Users (UserId)
 );
-
-CREATE 
