@@ -52,3 +52,10 @@ jobs:
     workingDirectory: $(solutionPath)
 
 
+  - task: AzureRmWebAppDeployment@4
+    inputs:
+      ConnectionType: 'AzureRM'
+      azureSubscription: 'Azure subscription 1(a8f0024b-b40d-44a8-8a01-2d63b02fb4c7)'
+      appType: 'webApp'
+      WebAppName: 'Project2-TheHub'
+      packageForLinux: '$(System.DefaultWorkingDirectory)/publish'
