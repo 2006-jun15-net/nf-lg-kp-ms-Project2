@@ -4,21 +4,21 @@ namespace TheHub.Library.Interfaces
 {
     public interface IReviewRepo
     {
-        Reviews GetById(int id);
+        Review GetById(int id);
 
-        Reviews GetByUserName(string username);
+        Review GetByUserName(string username);
 
-        Reviews GetByMediaId(int id);
+        Review GetByMediaId(int id);
 
-        Reviews GetByRating(int rating);
+        Review GetByRating(int rating);
 
-        Reviews GetByDate(DateTime date);
+        Review GetByDate(DateTime date);
 
-        Reviews GetByLikeCount(int likes);
+        Review GetByLikeCount(int likes);
 
-        void Add(Reviews reviews);
+        void Add(Review reviews);
 
-        void Update(Reviews reviews);
+        void Update(Review reviews);
 
         void UpdateDate(DateTime date);
 

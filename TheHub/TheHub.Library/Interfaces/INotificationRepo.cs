@@ -4,11 +4,11 @@ namespace TheHub.Library.Interfaces
 {
     public interface INotificationRepo
     {
-        Notifications GetById(int id);
+        Notification GetById(int id);
 
-        Notifications GetByReciverId(int id);
+        Notification GetByReciverId(int id);
 
-        void Add(Notifications notifications);
+        void Add(Notification notifications);
 
         void DeleteById(int id);
 

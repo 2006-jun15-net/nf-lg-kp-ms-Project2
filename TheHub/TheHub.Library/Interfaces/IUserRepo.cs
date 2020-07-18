@@ -5,17 +5,17 @@ namespace TheHub.Library.Interfaces
 {
     public interface IUserRepo
     {
-        Users GetById(int id);
+        User GetById(int id);
 
-        Users GetByUserName(string username);
+        User GetByUserName(string username);
 
-        List<string> GetFollowers(Users users); // bcs we want to just return the names of the user
+        List<string> GetFollowers(User users); // bcs we want to just return the names of the user
 
-        List<string> GetFollowing(Users users); // bcs we want to just return the names of the user
+        List<string> GetFollowing(User users); // bcs we want to just return the names of the user
 
-        void Add(Users user);
+        void Add(User user);
 
-        void Update(Users user);
+        void Update(User user);
 
         void Delete(int id);
     }
