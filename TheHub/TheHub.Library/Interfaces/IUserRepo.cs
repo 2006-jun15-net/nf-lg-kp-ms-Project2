@@ -10,9 +10,9 @@ namespace TheHub.Library.Interfaces
 
         User GetByUserName(string username);
 
-        List<string> GetFollowers(User users); // bcs we want to just return the names of the user
+        List<User> GetFollowers(int id); 
 
-        List<string> GetFollowing(User users); // bcs we want to just return the names of the user
+        List<User> GetFollowing(int id); 
 
         void Add(User user);
 
