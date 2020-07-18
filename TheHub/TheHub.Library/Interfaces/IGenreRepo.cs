@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TheHub.Library.Model;
 
 namespace TheHub.Library.Interfaces
 {

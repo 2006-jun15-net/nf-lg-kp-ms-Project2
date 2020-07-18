@@ -1,6 +1,6 @@
-﻿namespace TheHub.Library.Interfaces
+﻿namespace TheHub.Library.Model
 {
-    public class Users
+    public class User
     {
     }
 }

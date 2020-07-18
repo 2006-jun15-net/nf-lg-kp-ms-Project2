@@ -1,4 +1,5 @@
 ﻿using System;
+using TheHub.Library.Model;
 
 namespace TheHub.Library.Interfaces
 {
