@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TheHub.Library.Model;
 
 namespace TheHub.Library.Interfaces
@@ -7,21 +8,19 @@ namespace TheHub.Library.Interfaces
     {
         Review GetById(int id);
 
-        Review GetByUserName(string username);
+        List<Review> GetByUserId(int id);
 
-        Review GetByMediaId(int id);
+        List<Review> GetByMediaId(int id);
 
-        Review GetByRating(int rating);
+        List<Review> GetByRating(int rating);
 
-        Review GetByDate(DateTime date);
+        List<Review> GetByDate(DateTime date);
 
-        Review GetByLikeCount(int likes);
+        List<Review> GetByLikeCount(int likes);
 
-        void Add(Review reviews);
+        void Add(Review review);
 
-        void Update(Review reviews);
-
-        void UpdateDate(DateTime date);
+        void Update(Review review);
 
         void Delete(int id);
     }

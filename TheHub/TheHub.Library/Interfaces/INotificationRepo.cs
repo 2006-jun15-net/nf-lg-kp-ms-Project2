@@ -7,9 +7,9 @@ namespace TheHub.Library.Interfaces
     {
         Notification GetById(int id);
 
-        Notification GetByReciverId(int id);
+        List<Notification> GetByReciverId(int id);
 
-        void Add(Notification notifications);
+        void Add(Notification notification);
 
         void DeleteById(int id);
 
