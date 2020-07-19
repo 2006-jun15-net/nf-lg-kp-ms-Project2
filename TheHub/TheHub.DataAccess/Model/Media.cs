@@ -18,7 +18,7 @@ namespace TheHub.DataAccess.Model
         public string MediaUrl { get; set; }
         public int? GenreId { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual MediaTypes MediaType { get; set; }
         public virtual Genre Genre { get; set; }
         public virtual ICollection<Reviews> Reviews { get; set; }
     }

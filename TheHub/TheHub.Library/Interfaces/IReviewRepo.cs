@@ -16,8 +16,6 @@ namespace TheHub.Library.Interfaces
 
         List<Review> GetByDate(DateTime date);
 
-        List<Review> GetByLikeCount(int likes);
-
         void Add(Review review);
 
         void Update(Review review);
