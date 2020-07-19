@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TheHub.Library.Model;
 
 namespace TheHub.Library.Interfaces
@@ -7,15 +8,15 @@ namespace TheHub.Library.Interfaces
     {
         Media GetById(int id);
 
-        Media GetByCategory(string category);
+        List<Media> GetByCategory(string category);
 
         Media GetByTitle(string title);
 
-        Media GetByGenre(string genre);
+        List<Media> GetByGenre(string genre);
 
-        Media GetByRating(int rating);
+        List<Media> GetByRating(int rating);
 
-        Media GetByReviewcount(int reviewCount);
+        List<Media> GetByReviewcount(int reviewCount);
 
         void Add(Media media);
 
