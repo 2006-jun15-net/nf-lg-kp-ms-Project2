@@ -69,7 +69,7 @@ namespace TheHub.DataAccess.Repository
             return new Notification
             {
                 NotificationId = entity.NotificationId,
-                RecieverId = entity.ReciverId,
+                ReceiverId = entity.ReciverId,
                 SenderId = entity.SenderId,
                 Type = entity.NotificationType,
                 Date = entity.NotificationDate,
@@ -89,7 +89,7 @@ namespace TheHub.DataAccess.Repository
             return entities.Select(e => new Notification
             {
                 NotificationId = e.NotificationId,
-                RecieverId = e.ReciverId,
+                ReceiverId = e.ReciverId,
                 SenderId = e.SenderId,
                 Type = e.NotificationType,
                 Date = e.NotificationDate,
