@@ -3,8 +3,6 @@
 trigger:
 - master
 
-pr:
-- master
 
 variables:
   solutionPath: TheHub 
@@ -22,6 +20,7 @@ jobs:
       scannerMode: 'MSBuild'
       projectKey: '2006-jun15-net_nf-lg-kp-ms-Project2'
       projectName: 'nf-lg-kp-ms-Project2'
+      extraProperties: sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
 
   - script: dotnet build -c Release
     displayName: dotnet build
