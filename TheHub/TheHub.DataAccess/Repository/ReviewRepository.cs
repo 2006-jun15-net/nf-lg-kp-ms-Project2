@@ -47,23 +47,14 @@ namespace TheHub.DataAccess.Repository
         }
 
         /// <summary>
-        /// Gets all the Reviews after a given date without the ReviewLikes
+        /// Sorts all the reviews of a particular media by date
         /// </summary>
-        /// <param name="date">The date</param>
-        /// <returns>The list of Reviews</returns>
-        public IEnumerable<Review> GetByDate(DateTime date)
+        /// <param name="mediaId">The media Id</param>
+        /// <returns>The sorted list of Reviews</returns>
+        public IEnumerable<Review> SortByDate(int mediaId)
         {
-            var entities = _context.Reviews.Where(r => r.ReviewDate >= date.Date);
-            return entities.Select(e => new Review
-            {
-                ReviewId = e.ReviewId,
-                ReviewDate = e.ReviewDate,
-                Rating = e.Rating,
-                MediaId = e.MediaId,
-                UserId = e.UserId,
-                Likes = e.Likes,
-                Content = e.Content
-            });
+            var entities = GetByMediaId(mediaId);
+            return entities.OrderByDescending(r => r.ReviewDate);
         }
 
         /// <summary>
@@ -87,16 +78,14 @@ namespace TheHub.DataAccess.Repository
         }
 
         /// <summary>
-        /// Gets all the Reviews with likes >= the given number of likes without the ReviewLikes
+        /// Sorts all the reviews of a particular media by like count 
         /// </summary>
-        /// <param name="likes">The number of likes</param>
-        /// <returns>The Review</returns>
-        public IEnumerable<Review> GetByLikeCount(int MediaId)
+        /// <param name="mediaId">The number of likes</param>
+        /// <returns>The sorted list of Reviews</returns>
+        public IEnumerable<Review> SortByLikeCount(int mediaId)
         {
-            var entities = GetByMediaId(MediaId);
-            entities.OrderByDescending(c => c.Likes);
-            return entities;
-            
+            var entities = GetByMediaId(mediaId);
+            return entities.OrderByDescending(r => r.Likes);   
         }
 
         /// <summary>
@@ -120,23 +109,14 @@ namespace TheHub.DataAccess.Repository
         }
 
         /// <summary>
-        /// Gets all the Reviews with a rating >= the given rating without ReviewLikes
+        /// Sorts all the reviews of a particular media by rating
         /// </summary>
-        /// <param name="rating">The Review Rating</param>
-        /// <returns>The list of Reviews</returns>
-        public IEnumerable<Review> GetByRating(int rating)
+        /// <param name="mediaId">The Media Id</param>
+        /// <returns>The sorted list of Reviews</returns>
+        public IEnumerable<Review> SortByRating(int mediaId)
         {
-            var entities = _context.Reviews.Where(r => r.Rating >= rating);
-            return entities.Select(e => new Review
-            {
-                ReviewId = e.ReviewId,
-                ReviewDate = e.ReviewDate,
-                Rating = e.Rating,
-                MediaId = e.MediaId,
-                UserId = e.UserId,
-                Likes = e.Likes,
-                Content = e.Content
-            });
+            var entities = GetByMediaId(mediaId);
+            return entities.OrderByDescending(r => r.Rating);
         }
 
         /// <summary>
@@ -149,11 +129,11 @@ namespace TheHub.DataAccess.Repository
             var entities = _context.Reviews
                 .Include(r => r.ReviewLikes)
                 .Where(r => r.UserId == id);
-            IEnumerable<Review> reviews = new IEnumerable<Review>();
+            List<Review> reviews = new List<Review>();
 
             foreach(var review in entities)
             {
-                IEnumerable<User> likers = new IEnumerable<User>();
+                List<User> likers = new List<User>();
                 foreach (var line in review.ReviewLikes)
                 {
                     var liker = _context.Users.Find(line.UserId);

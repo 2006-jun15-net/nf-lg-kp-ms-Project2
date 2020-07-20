@@ -10,9 +10,9 @@ namespace TheHub.Library.Interfaces
 
         User GetByUserName(string username);
 
-        List<User> GetFollowers(int id); 
+        IEnumerable<User> GetFollowers(int id); 
 
-        List<User> GetFollowing(int id); 
+        IEnumerable<User> GetFollowing(int id); 
 
         void Add(User user);
 

@@ -12,9 +12,9 @@ namespace TheHub.Library.Interfaces
 
         IEnumerable<Review> GetByMediaId(int id);
 
-        IEnumerable<Review> GetByRating(int rating);
+        IEnumerable<Review> SortByRating(int mediaId);
 
-        IEnumerable<Review> GetByDate(DateTime date);
+        IEnumerable<Review> SortByDate(int mediaId);
 
         void Add(Review review);
 
