@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheHub.Library.Model
 {
-    class Review
+    public class Review
     {
         public int ReviewId
         {
