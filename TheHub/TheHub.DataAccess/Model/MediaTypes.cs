@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace TheHub.DataAccess.Model
 {
-    public partial class Category
+    public partial class MediaTypes
     {
-        public Category()
+        public MediaTypes()
         {
             Media = new HashSet<Media>();
         }
 
-        public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
+        public int MediaTypeId { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Media> Media { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TheHub.Library.Model
 {
@@ -10,5 +11,7 @@ namespace TheHub.Library.Model
         public int UserId { get; set; }
         public int Likes { get; set; }
         public DateTime Date { get; set; }
+        public List<User> Likers = new List<User>();
+
     }
 }

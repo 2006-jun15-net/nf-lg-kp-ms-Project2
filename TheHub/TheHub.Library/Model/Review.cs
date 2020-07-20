@@ -18,7 +18,18 @@ namespace TheHub.Library.Model
                 ReviewId = value;
             }
         }
-        public string Content { get; set; }
+        public string Content 
+        {
+            get => Content;
+            set
+            {
+                if (value == "")
+                {
+                    throw new ArgumentNullException("Contents of review may not be empty", nameof(value));
+                }
+                Content = value;
+            }
+        }
         public int MediaId
         {
             get => MediaId;
@@ -46,11 +57,8 @@ namespace TheHub.Library.Model
         public DateTime? ReviewDate { get; set; }
         public int? Likes { get; set; }
         public int? Rating { get; set; }
-        List<Comment> comments = new List<Comment>();
+        public List<Comment> comments = new List<Comment>();
+        public List<User> Likers = new List<User>();
 
-        public void UpdateLikes()
-        {
-
-        }
     }
 }

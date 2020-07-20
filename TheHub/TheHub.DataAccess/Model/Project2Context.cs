@@ -15,7 +15,7 @@ namespace TheHub.DataAccess.Model
         {
         }
 
-        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<MediaTypes> MediaType { get; set; }
         public virtual DbSet<CommentLikes> CommentLikes { get; set; }
         public virtual DbSet<Comments> Comments { get; set; }
         public virtual DbSet<Following> Following { get; set; }
@@ -28,7 +28,7 @@ namespace TheHub.DataAccess.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Category>(entity =>
+            modelBuilder.Entity<MediaTypes>(entity =>
             {
                 entity.Property(e => e.CategoryName).HasMaxLength(255);
             });

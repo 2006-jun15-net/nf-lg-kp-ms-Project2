@@ -54,7 +54,7 @@ namespace TheHub.DataAccess.Repository
         public List<Review> GetByDate(DateTime date)
         {
             var entities = _context.Reviews.Where(r => r.ReviewDate >= date.Date);
-            return entities.Select(e => new Review
+            return (List<Review>)entities.Select(e => new Review
             {
                 ReviewId = e.ReviewId,
                 ReviewDate = e.ReviewDate,
@@ -94,7 +94,7 @@ namespace TheHub.DataAccess.Repository
         public Review GetByLikeCount(int likes)
         {
             var entities = _context.Reviews.Where(r => r.Likes >= likes);
-            return entities.Select(e => new Review
+            return (Review)entities.Select(e => new Review
             {
                 ReviewId = e.ReviewId,
                 ReviewDate = e.ReviewDate,
@@ -114,7 +114,7 @@ namespace TheHub.DataAccess.Repository
         public List<Review> GetByMediaId(int id)
         {
             var entities = _context.Reviews.Where(r => r.MediaId == id);
-            return entities.Select(e => new Review
+            return (List<Review>)entities.Select(e => new Review
             {
                 ReviewId = e.ReviewId,
                 ReviewDate = e.ReviewDate,
@@ -134,7 +134,7 @@ namespace TheHub.DataAccess.Repository
         public List<Review> GetByRating(int rating)
         {
             var entities = _context.Reviews.Where(r => r.Rating >= rating);
-            return entities.Select(e => new Review
+            return (List<Review>)entities.Select(e => new Review
             {
                 ReviewId = e.ReviewId,
                 ReviewDate = e.ReviewDate,

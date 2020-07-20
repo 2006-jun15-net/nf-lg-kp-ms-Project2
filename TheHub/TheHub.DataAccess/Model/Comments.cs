@@ -14,7 +14,7 @@ namespace TheHub.DataAccess.Model
         public string Content { get; set; }
         public int ReviewId { get; set; }
         public int UserId { get; set; }
-
+        public DateTime date { get; set; }
         public virtual Users User { get; set; }
         public virtual ICollection<CommentLikes> CommentLikes { get; set; }
     }
