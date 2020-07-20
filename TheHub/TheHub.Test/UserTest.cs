@@ -54,7 +54,7 @@ namespace TheHub.Test
         public void Password_NonEmptyValue_StoresCorrectly()
         {
             string randomPassword = "ETphonedHome123!";
-            user.UserName = randomPassword;
+            user.Password = randomPassword;
             Assert.Equal(randomPassword, user.Password);
         }
 
