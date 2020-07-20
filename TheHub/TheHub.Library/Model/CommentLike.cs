@@ -8,5 +8,7 @@ namespace TheHub.Library.Model
     {
         public int UserId { get; set; }
         public int CommentId { get; set; }
+
+        public List<User> Likers { get; set; }
     }
 }

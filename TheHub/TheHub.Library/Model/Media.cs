@@ -1,18 +1,33 @@
-﻿namespace TheHub.Library.Model
+﻿using System;
+
+namespace TheHub.Library.Model
 {
-    public abstract class Media
+    public class Media
     {
-        public abstract int MediaId { get; set; }
+        public int MediaId { get; set; }
 
-        public abstract int GenreId { get; set; }
+        public int? GenreId { get; set; }
 
-        public abstract int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
-        public abstract string MediaName { get; set; }
-        public abstract string Description { get; set; }
+        public string _mediaName { get; set; }
+        public string Description { get; set; }
 
-        public abstract int Rating { get; set; }
+        public int? Rating { get; set; }
 
-        public abstract string MediaUrl { get; set; }
+        public string MediaUrl { get; set; }
+
+        public string MediaName
+        {
+            get => _mediaName;
+            set
+            {
+                if (value.Length == 0)
+                {
+                    throw new ArgumentException("Media Name cannot be empty", nameof(value));
+                }
+                _mediaName = value;
+            }
+        }
     }
 }
