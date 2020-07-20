@@ -8,13 +8,13 @@ namespace TheHub.Library.Interfaces
     {
         Review GetById(int id);
 
-        IEnumerable<Review> GetByUserId(int id);
+        List<Review> GetByUserId(int id);
 
-        IEnumerable<Review> GetByMediaId(int id);
+        List<Review> GetByMediaId(int id);
 
-        IEnumerable<Review> GetByRating(int rating);
+        List<Review> GetByRating(int rating);
 
-        IEnumerable<Review> GetByDate(DateTime date);
+        List<Review> GetByDate(DateTime date);
 
         void Add(Review review);
 

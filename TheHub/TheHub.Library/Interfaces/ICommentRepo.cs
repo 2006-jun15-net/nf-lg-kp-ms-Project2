@@ -7,7 +7,7 @@ namespace TheHub.Library.Interfaces
     public interface ICommentRepo
     {
         Comment GetById(int id);
-        IEnumerable<Comment> GetByReviewId(int id);
+        List<Comment> GetByReviewId(int id);
         void Add(Comment comment);
         void DeleteById(int id);
         void Update(Comment comment);

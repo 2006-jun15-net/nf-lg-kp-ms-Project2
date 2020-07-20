@@ -30,9 +30,9 @@ CREATE TABLE Following (
         REFERENCES Users (UserId) ON DELETE CASCADE
 );
 
-CREATE TABLE Category (
-    CategoryId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-    CategoryName NVARCHAR(255)
+CREATE TABLE MediaTypes (
+    MediaTypesId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    MediaTypesName NVARCHAR(255)
 );
 
 CREATE TABLE Genre (
@@ -45,11 +45,11 @@ CREATE TABLE Media (
     Rating INT,
     MediaName NVARCHAR(255),
     Description NVARCHAR(MAX),
-    CategoryId INT,
+    MediaTypesId INT,
     MediaURL NVARCHAR(MAX),
     GenreId INT,
-    CONSTRAINT FK_Media_CategoryId_Category FOREIGN KEY (CategoryId) 
-        REFERENCES Category (CategoryId),
+    CONSTRAINT FK_Media_MediaTypesId_MediaTypes FOREIGN KEY (MediaTypesId) 
+        REFERENCES MediaTypes (MediaTypesId),
     CONSTRAINT FK_Media_GenreId_Genre FOREIGN KEY (GenreId) 
         REFERENCES Genre (GenreId) 
 );
@@ -59,7 +59,7 @@ CREATE TABLE Reviews (
     Content NVARCHAR(MAX) NOT NULL,
     MediaId INT NOT NULL,
     UserId INT NOT NULL,
-    ReviewDate DATETIME,
+    ReviewDate DATETIME2 NOT NULL,
     Likes INT,
     Rating INT,
     CONSTRAINT FK_Reviews_UserId_Users FOREIGN KEY (UserId) 
@@ -73,6 +73,7 @@ CREATE TABLE Comments (
     Content NVARCHAR(255) NOT NULL,
     ReviewId INT NOT NULL,
     UserId INT NOT NULL,
+    CommentDate DATETIME2 NOT NULL,
      CONSTRAINT FK_Comments_UserId_Users FOREIGN KEY (UserId) 
         REFERENCES Users (UserId) ON DELETE CASCADE
 );
@@ -103,6 +104,7 @@ CREATE TABLE Notifications (
     Status BIT NOT NULL,
     ReciverId INT NOT NULL,
     SenderId INT,
+    NotificationDate DATETIME2 NOT NULL,
     NotificationType NVARCHAR(255) NOT NULL,
     CONSTRAINT FK_Notificatoins_Reciver_UserId_Users FOREIGN KEY (ReciverId) 
         REFERENCES Users (UserId) ON DELETE CASCADE,

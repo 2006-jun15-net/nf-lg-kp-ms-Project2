@@ -30,7 +30,7 @@ namespace TheHub.DataAccess.Repository
                 Content = comment.Content,
                 ReviewId = comment.ReviewId,
                 UserId = comment.UserId,
-                date = DateTime.Now
+                CommentDate = DateTime.Now
             };
             _context.Comments.Add(entity);
             _context.SaveChanges();
@@ -74,7 +74,7 @@ namespace TheHub.DataAccess.Repository
                 Content = entity.Content,
                 UserId = entity.UserId,
                 Likes = entity.CommentLikes.Count,
-                Date = entity.date,
+                Date = entity.CommentDate,
                 Likers = likers
             };
         }
@@ -84,17 +84,17 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="id">The Review ID</param>
         /// <returns>The list of Comments</returns>
-        public IEnumerable<Comment> GetByReviewId(int id)
+        public List<Comment> GetByReviewId(int id)
         {
             var entities = _context.Comments.Where(c => c.ReviewId == id);
-            return entities.Select(e => new Comment
+            return (List<Comment>)entities.Select(e => new Comment
             {
                 CommentId = e.CommentId,
                 ReviewId = e.ReviewId,
                 Content = e.Content,
                 UserId = e.UserId,
                 Likes = e.CommentLikes.Count,
-                Date = e.date
+                Date = e.CommentDate
             });
 
         }
@@ -107,7 +107,7 @@ namespace TheHub.DataAccess.Repository
         {
             var entity = _context.Comments.Find(comment.CommentId);
             entity.Content = comment.Content;
-            entity.date = DateTime.Now;
+            entity.CommentDate = DateTime.Now;
             _context.SaveChanges();
         }
     }

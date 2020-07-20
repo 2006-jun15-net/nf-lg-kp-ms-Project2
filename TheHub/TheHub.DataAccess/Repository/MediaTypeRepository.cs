@@ -21,42 +21,42 @@ namespace TheHub.DataAccess.Repository
         {
             var entity = new MediaTypes
             {
-                Name = mediatype.Name
+                MediaTypesName = mediatype.Name
             };
-            _context.MediaType.Add(entity);
+            _context.MediaTypes.Add(entity);
             _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            _context.MediaType.Remove(_context.MediaType.Find(id));
+            _context.MediaTypes.Remove(_context.MediaTypes.Find(id));
             _context.SaveChanges();
         }
 
         public IEnumerable<MediaType> GetAll()
         {
-            var entity = _context.MediaType;
+            var entity = _context.MediaTypes.ToList();
             return entity.Select(c => new MediaType
             {
-                Id = c.MediaTypeId,
-                Name = c.Name
+                Id = c.MediaTypesId,
+                Name = c.MediaTypesName
             });
         }
 
         public MediaType GetById(int id)
         {
-            var entity = _context.MediaType.Find(id);
+            var entity = _context.MediaTypes.Find(id);
             return new MediaType
             {
-                Id = entity.MediaTypeId,
-                Name = entity.Name
+                Id = entity.MediaTypesId,
+                Name = entity.MediaTypesName
             };
         }
 
         public void Update(MediaType mediaType)
         {
-            var entity = _context.MediaType.Find(mediaType.Id);
-            entity.Name = mediaType.Name;
+            var entity = _context.MediaTypes.Find(mediaType.Id);
+            entity.MediaTypesName = mediaType.Name;
             _context.SaveChanges();
         }
     }

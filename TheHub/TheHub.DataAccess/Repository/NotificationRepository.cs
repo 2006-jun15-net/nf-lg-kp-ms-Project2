@@ -83,7 +83,7 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="id">The User ID</param>
         /// <returns>The list of Notifications</returns>
-        public List<Notification> GetByReciverId(int id)
+        public IEnumerable<Notification> GetByReciverId(int id)
         {
             var entities = _context.Notifications.Where(n => n.ReciverId == id);
             return entities.Select(e => new Notification

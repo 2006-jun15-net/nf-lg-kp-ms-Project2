@@ -10,8 +10,8 @@ namespace TheHub.DataAccess.Model
             Media = new HashSet<Media>();
         }
 
-        public int MediaTypeId { get; set; }
-        public string Name { get; set; }
+        public int MediaTypesId { get; set; }
+        public string MediaTypesName { get; set; }
 
         public virtual ICollection<Media> Media { get; set; }
     }

@@ -14,7 +14,7 @@ namespace TheHub.DataAccess.Model
         public string Content { get; set; }
         public int MediaId { get; set; }
         public int UserId { get; set; }
-        public DateTime? ReviewDate { get; set; }
+        public DateTime ReviewDate { get; set; }
         public int? Likes { get; set; }
         public int? Rating { get; set; }
 

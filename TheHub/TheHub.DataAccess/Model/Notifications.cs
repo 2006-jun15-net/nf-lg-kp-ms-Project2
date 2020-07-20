@@ -10,6 +10,7 @@ namespace TheHub.DataAccess.Model
         public bool Status { get; set; }
         public int ReciverId { get; set; }
         public int? SenderId { get; set; }
+        public DateTime NotificationDate { get; set; }
         public string NotificationType { get; set; }
 
         public virtual Users Reciver { get; set; }

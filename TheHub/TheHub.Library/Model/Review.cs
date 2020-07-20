@@ -54,7 +54,7 @@ namespace TheHub.Library.Model
                 UserId = value;
             }
         }
-        public DateTime? ReviewDate { get; set; }
+        public DateTime ReviewDate { get; set; }
         public int? Likes { get; set; }
         public int? Rating { get; set; }
         public List<Comment> comments = new List<Comment>();

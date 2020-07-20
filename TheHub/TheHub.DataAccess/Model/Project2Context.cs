@@ -15,12 +15,13 @@ namespace TheHub.DataAccess.Model
         {
         }
 
-        public virtual DbSet<MediaTypes> MediaType { get; set; }
         public virtual DbSet<CommentLikes> CommentLikes { get; set; }
         public virtual DbSet<Comments> Comments { get; set; }
         public virtual DbSet<Following> Following { get; set; }
         public virtual DbSet<Genre> Genre { get; set; }
         public virtual DbSet<Media> Media { get; set; }
+        //public virtual DbSet<MediaType> MediaType { get; set; }
+        public virtual DbSet<MediaTypes> MediaTypes { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
         public virtual DbSet<ReviewLikes> ReviewLikes { get; set; }
         public virtual DbSet<Reviews> Reviews { get; set; }
@@ -28,11 +29,6 @@ namespace TheHub.DataAccess.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MediaTypes>(entity =>
-            {
-                entity.Property(e => e.CategoryName).HasMaxLength(255);
-            });
-
             modelBuilder.Entity<CommentLikes>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.CommentId })
@@ -53,7 +49,7 @@ namespace TheHub.DataAccess.Model
             modelBuilder.Entity<Comments>(entity =>
             {
                 entity.HasKey(e => e.CommentId)
-                    .HasName("PK__Comments__C3B4DFCA3E077DCB");
+                    .HasName("PK__Comments__C3B4DFCAEFF6CAE3");
 
                 entity.Property(e => e.Content)
                     .IsRequired()
@@ -89,21 +85,27 @@ namespace TheHub.DataAccess.Model
 
                 entity.Property(e => e.MediaUrl).HasColumnName("MediaURL");
 
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Media)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK_Media_CategoryId_Category");
-
                 entity.HasOne(d => d.Genre)
                     .WithMany(p => p.Media)
                     .HasForeignKey(d => d.GenreId)
                     .HasConstraintName("FK_Media_GenreId_Genre");
+
+                entity.HasOne(d => d.MediaTypes)
+                    .WithMany(p => p.Media)
+                    .HasForeignKey(d => d.MediaTypesId)
+                    .HasConstraintName("FK_Media_MediaTypesId_MediaTypes");
+            });
+
+          
+            modelBuilder.Entity<MediaTypes>(entity =>
+            {
+                entity.Property(e => e.MediaTypesName).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Notifications>(entity =>
             {
                 entity.HasKey(e => e.NotificationId)
-                    .HasName("PK__Notifica__20CF2E12977979E4");
+                    .HasName("PK__Notifica__20CF2E126B04379C");
 
                 entity.Property(e => e.NotificationType)
                     .IsRequired()
@@ -142,11 +144,9 @@ namespace TheHub.DataAccess.Model
             modelBuilder.Entity<Reviews>(entity =>
             {
                 entity.HasKey(e => e.ReviewId)
-                    .HasName("PK__Reviews__74BC79CE2BC63E17");
+                    .HasName("PK__Reviews__74BC79CE38CE3296");
 
                 entity.Property(e => e.Content).IsRequired();
-
-                entity.Property(e => e.ReviewDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Media)
                     .WithMany(p => p.Reviews)
@@ -162,14 +162,14 @@ namespace TheHub.DataAccess.Model
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.HasKey(e => e.UserId)
-                    .HasName("PK__Users__1788CC4CE96F2EED");
+                    .HasName("PK__Users__1788CC4C4C6C18A7");
 
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__Users__A9D10534DBE4188F")
+                    .HasName("UQ__Users__A9D10534716AE8EA")
                     .IsUnique();
 
                 entity.HasIndex(e => e.UserName)
-                    .HasName("UQ__Users__C9F28456839205B6")
+                    .HasName("UQ__Users__C9F28456CE47F1DC")
                     .IsUnique();
 
                 entity.Property(e => e.Bio)

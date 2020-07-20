@@ -23,7 +23,7 @@ namespace TheHub.DataAccess.Repository
                 Rating = media.Rating,
                 MediaName = media.MediaName,
                 Description = media.Description,
-                CategoryId = media.CategoryId,
+                MediaTypesId = media.MediaTypeId,
                 MediaUrl = media.MediaUrl,
                 GenreId = media.GenreId
             };
@@ -39,14 +39,14 @@ namespace TheHub.DataAccess.Repository
 
         public IEnumerable<Media> GetByCategory(string mediaType)
         {
-            var entity = _context.Media.Where(m => m.MediaType.Name.Equals(mediaType));
+            var entity = _context.Media.Where(m => m.MediaTypes.MediaTypesName == mediaType);
             return entity.Select(m => new Media
             {
                 MediaId = m.MediaId,
                 MediaName = m.MediaName,
                 Rating = m.Rating,
                 Description = m.Description,
-                CategoryId = m.CategoryId,
+                MediaTypeId = m.MediaId,
                 MediaUrl = m.MediaUrl,
                 GenreId = m.GenreId
             });
@@ -54,14 +54,14 @@ namespace TheHub.DataAccess.Repository
 
         public IEnumerable<Media> GetByGenre(string genre)
         {
-            var entity = _context.Media.Where(m => m.Genre.GenreName.Equals(genre));
+            var entity = _context.Media.Where(m => m.Genre.GenreName == genre);
             return entity.Select(m => new Media
             {
                 MediaId = m.MediaId,
                 MediaName = m.MediaName,
                 Rating = m.Rating,
                 Description = m.Description,
-                CategoryId = m.CategoryId,
+                MediaTypeId = m.MediaTypesId,
                 MediaUrl = m.MediaUrl,
                 GenreId = m.GenreId
             });
@@ -76,7 +76,7 @@ namespace TheHub.DataAccess.Repository
                MediaName = entity.MediaName,
                Rating = entity.Rating,
                Description = entity.Description,
-               CategoryId = entity.CategoryId,
+               MediaTypeId = entity.MediaTypesId,
                MediaUrl = entity.MediaUrl,
                GenreId = entity.GenreId
             };
@@ -91,7 +91,7 @@ namespace TheHub.DataAccess.Repository
                 MediaName = m.MediaName,
                 Rating = m.Rating,
                 Description = m.Description,
-                CategoryId = m.CategoryId,
+                MediaTypeId = m.MediaTypesId,
                 MediaUrl = m.MediaUrl,
                 GenreId = m.GenreId
             });
@@ -106,7 +106,7 @@ namespace TheHub.DataAccess.Repository
                 MediaName = m.MediaName,
                 Rating = m.Rating,
                 Description = m.Description,
-                CategoryId = m.CategoryId,
+                MediaTypeId = m.MediaTypesId,
                 MediaUrl = m.MediaUrl,
                 GenreId = m.GenreId
             });
@@ -121,7 +121,7 @@ namespace TheHub.DataAccess.Repository
                 MediaName = entity.MediaName,
                 Rating = entity.Rating,
                 Description = entity.Description,
-                CategoryId = entity.CategoryId,
+                MediaTypeId = entity.MediaTypesId,
                 MediaUrl = entity.MediaUrl,
                 GenreId = entity.GenreId
             };

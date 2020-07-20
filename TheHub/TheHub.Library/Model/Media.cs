@@ -8,7 +8,7 @@ namespace TheHub.Library.Model
 
         public int? GenreId { get; set; }
 
-        public int? CategoryId { get; set; }
+        public int? MediaTypeId { get; set; }
 
         public string _mediaName { get; set; }
         public string Description { get; set; }
