@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace TheHub.Library.Model
 {
     public class User
@@ -26,6 +27,7 @@ namespace TheHub.Library.Model
         List<User> Followers { get; set; }
 
         List<User> Following { get; set; }
+
 
         public string FirstName
         {

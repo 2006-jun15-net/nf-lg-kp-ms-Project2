@@ -9,7 +9,7 @@ using TheHub.Library.Model;
 
 namespace TheHub.DataAccess.Repository
 {
-    class CommentRepository:ICommentRepo
+    public class CommentRepository:ICommentRepo
     {
         private readonly Project2Context _context;
 

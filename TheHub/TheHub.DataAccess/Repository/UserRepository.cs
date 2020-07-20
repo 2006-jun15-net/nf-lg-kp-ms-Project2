@@ -9,7 +9,7 @@ using TheHub.Library.Model;
 
 namespace TheHub.DataAccess.Repository
 {
-    class UserRepository : IUserRepo
+    public class UserRepository : IUserRepo
     {
         private readonly Project2Context _context;
 

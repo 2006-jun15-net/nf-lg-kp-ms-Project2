@@ -9,7 +9,7 @@ using TheHub.Library.Model;
 
 namespace TheHub.DataAccess.Repository
 {
-    class ReviewRepository : IReviewRepo
+    public class ReviewRepository : IReviewRepo
     {
         private readonly Project2Context _context;
 

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>4f96706b-9422-4e5c-9331-ddd5826b29b4</UserSecretsId>
   </PropertyGroup>
 
 
@@ -16,5 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TheHub.DataAccess\TheHub.DataAccess.csproj" />
+    <ProjectReference Include="..\TheHub.Library\TheHub.Library.csproj" />
   </ItemGroup>
 </Project>

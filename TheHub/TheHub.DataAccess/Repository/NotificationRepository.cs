@@ -8,7 +8,7 @@ using TheHub.Library.Model;
 
 namespace TheHub.DataAccess.Repository
 {
-    class NotificationRepository: INotificationRepo
+    public class NotificationRepository: INotificationRepo
     {
         private readonly Project2Context _context;
 
