@@ -51,10 +51,10 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="date">The date</param>
         /// <returns>The list of Reviews</returns>
-        public List<Review> GetByDate(DateTime date)
+        public IEnumerable<Review> GetByDate(DateTime date)
         {
             var entities = _context.Reviews.Where(r => r.ReviewDate >= date.Date);
-            return (List<Review>)entities.Select(e => new Review
+            return entities.Select(e => new Review
             {
                 ReviewId = e.ReviewId,
                 ReviewDate = e.ReviewDate,
@@ -91,19 +91,12 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="likes">The number of likes</param>
         /// <returns>The Review</returns>
-        public Review GetByLikeCount(int likes)
+        public IEnumerable<Review> GetByLikeCount(int MediaId)
         {
-            var entities = _context.Reviews.Where(r => r.Likes >= likes);
-            return (Review)entities.Select(e => new Review
-            {
-                ReviewId = e.ReviewId,
-                ReviewDate = e.ReviewDate,
-                Rating = e.Rating,
-                MediaId = e.MediaId,
-                UserId = e.UserId,
-                Likes = e.Likes,
-                Content = e.Content
-            });
+            var entities = GetByMediaId(MediaId);
+            entities.OrderByDescending(c => c.Likes);
+            return entities;
+            
         }
 
         /// <summary>
@@ -111,10 +104,10 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="id">The Media ID</param>
         /// <returns>The list of Reviews</returns>
-        public List<Review> GetByMediaId(int id)
+        public IEnumerable<Review> GetByMediaId(int id)
         {
             var entities = _context.Reviews.Where(r => r.MediaId == id);
-            return (List<Review>)entities.Select(e => new Review
+            return entities.Select(e => new Review
             {
                 ReviewId = e.ReviewId,
                 ReviewDate = e.ReviewDate,
@@ -131,10 +124,10 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="rating">The Review Rating</param>
         /// <returns>The list of Reviews</returns>
-        public List<Review> GetByRating(int rating)
+        public IEnumerable<Review> GetByRating(int rating)
         {
             var entities = _context.Reviews.Where(r => r.Rating >= rating);
-            return (List<Review>)entities.Select(e => new Review
+            return entities.Select(e => new Review
             {
                 ReviewId = e.ReviewId,
                 ReviewDate = e.ReviewDate,
@@ -151,16 +144,16 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="username">The User UserName</param>
         /// <returns>The list of Reviews</returns>
-        public List<Review> GetByUserId(int id)
+        public IEnumerable<Review> GetByUserId(int id)
         {
             var entities = _context.Reviews
                 .Include(r => r.ReviewLikes)
                 .Where(r => r.UserId == id);
-            List<Review> reviews = new List<Review>();
+            IEnumerable<Review> reviews = new IEnumerable<Review>();
 
             foreach(var review in entities)
             {
-                List<User> likers = new List<User>();
+                IEnumerable<User> likers = new IEnumerable<User>();
                 foreach (var line in review.ReviewLikes)
                 {
                     var liker = _context.Users.Find(line.UserId);
