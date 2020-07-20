@@ -39,7 +39,7 @@ namespace TheHub.DataAccess.Repository
 
         public IEnumerable<Media> GetByCategory(string mediaType)
         {
-            var entity = _context.Media.Where(m => m.MediaType.Name == mediaType);
+            var entity = _context.Media.Where(m => m.MediaType.Name.Equals(mediaType));
             return entity.Select(m => new Media
             {
                 MediaId = m.MediaId,
@@ -54,7 +54,7 @@ namespace TheHub.DataAccess.Repository
 
         public IEnumerable<Media> GetByGenre(string genre)
         {
-            var entity = _context.Media.Where(m => m.Genre.GenreName == genre);
+            var entity = _context.Media.Where(m => m.Genre.GenreName.Equals(genre));
             return entity.Select(m => new Media
             {
                 MediaId = m.MediaId,

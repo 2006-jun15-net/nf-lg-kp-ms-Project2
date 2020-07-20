@@ -84,10 +84,10 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="id">The Review ID</param>
         /// <returns>The list of Comments</returns>
-        public List<Comment> GetByReviewId(int id)
+        public IEnumerable<Comment> GetByReviewId(int id)
         {
             var entities = _context.Comments.Where(c => c.ReviewId == id);
-            return (List<Comment>)entities.Select(e => new Comment
+            return entities.Select(e => new Comment
             {
                 CommentId = e.CommentId,
                 ReviewId = e.ReviewId,

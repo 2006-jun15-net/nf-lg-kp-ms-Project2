@@ -35,7 +35,7 @@ namespace TheHub.DataAccess.Repository
 
         public IEnumerable<MediaType> GetAll()
         {
-            var entity = _context.MediaType.ToList();
+            var entity = _context.MediaType;
             return entity.Select(c => new MediaType
             {
                 Id = c.MediaTypeId,

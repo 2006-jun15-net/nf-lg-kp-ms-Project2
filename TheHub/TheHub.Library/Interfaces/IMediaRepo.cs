@@ -8,15 +8,15 @@ namespace TheHub.Library.Interfaces
     {
         Media GetById(int id);
 
-        List<Media> GetByCategory(string category);
+        IEnumerable<Media> GetByCategory(string category);
 
         Media GetByTitle(string title);
 
-        List<Media> GetByGenre(string genre);
+        IEnumerable<Media> GetByGenre(string genre);
 
-        List<Media> GetByRating(int rating);
+        IEnumerable<Media> GetByRating(int rating);
 
-        List<Media> GetByReviewcount(int reviewCount);
+        IEnumerable<Media> GetByReviewcount(int reviewCount);
 
         void Add(Media media);
 

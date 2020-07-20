@@ -95,7 +95,7 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="users">The User ID</param>
         /// <returns>The list of Followers</returns>
-        public List<User> GetFollowers(int id)
+        public IEnumerable<User> GetFollowers(int id)
         {
             var entities = _context.Following.Where(f => f.FollowingId == id);
             List<User> followers = new List<User>();
@@ -118,7 +118,7 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="users">The User ID</param>
         /// <returns>The list of followed Users</returns>
-        public List<User> GetFollowing(int id)
+        public IEnumerable<User> GetFollowing(int id)
         {
             var entity = _context.Users
                 .Include(u => u.Following)

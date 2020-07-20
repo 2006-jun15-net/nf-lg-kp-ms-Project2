@@ -8,7 +8,7 @@ namespace TheHub.Library.Interfaces
     {
         Notification GetById(int id);
 
-        List<Notification> GetByReciverId(int id);
+        IEnumerable<Notification> GetByReciverId(int id);
 
         void Add(Notification notification);
 
