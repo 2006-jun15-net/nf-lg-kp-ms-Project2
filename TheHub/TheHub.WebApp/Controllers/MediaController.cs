@@ -40,7 +40,7 @@ namespace TheHub.WebApp.Controllers
 
             if (currentMedia == null)
             {
-                return NotFound()
+                return NotFound();
             }
             else
             {
