@@ -111,3 +111,5 @@ CREATE TABLE Notifications (
     CONSTRAINT FK_Notifications_Sender_UserId_Users FOREIGN KEY (SenderId) 
         REFERENCES Users (UserId)
 );
+
+SELECT * FROM Users;
