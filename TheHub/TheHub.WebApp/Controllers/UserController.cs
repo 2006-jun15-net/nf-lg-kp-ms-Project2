@@ -54,6 +54,16 @@ namespace TheHub.WebApp.Controllers
         {
         }
 
+        // PUT api/<UserController>/5
+        [HttpPut("Update/{id}")]
+        public IActionResult UpdateProfile([FromBody] User user)
+        {
+                _userRepository.Update(user);
+
+                return Ok();
+
+        }
+
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
