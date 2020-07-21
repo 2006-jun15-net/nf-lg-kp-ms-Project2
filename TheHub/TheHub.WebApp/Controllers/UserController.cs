@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -56,7 +57,7 @@ namespace TheHub.WebApp.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("Update/{id}")]
-        public IActionResult UpdateProfile([FromBody] User user)
+        public IActionResult UpdateProfile([FromBody][Required] User user)
         {
                 _userRepository.Update(user);
 
