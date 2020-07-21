@@ -23,11 +23,7 @@ namespace TheHub.WebApp.Controllers
             _mediaRepository = mediaRepository;
         }
         // GET: api/<MediaController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        
 
         // GET api/<MediaController>/5
         [HttpGet("{id}")]
@@ -74,12 +70,7 @@ namespace TheHub.WebApp.Controllers
             }
             else
             {
-                currentMedia.MediaTypeId = media.MediaTypeId;
-                currentMedia.GenreId = media.GenreId;
-                currentMedia.MediaName = media.MediaName;
-                currentMedia.Description = media.Description;
-                currentMedia.MediaUrl = media.MediaUrl;
-
+                
                 _mediaRepository.Update(currentMedia);
 
                 return CreatedAtAction(nameof(GetMediaById), new { id = currentMedia.MediaId }, currentMedia);
