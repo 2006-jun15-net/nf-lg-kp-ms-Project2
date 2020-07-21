@@ -62,28 +62,25 @@ namespace TheHub.WebApp.Controllers
             return Ok(_reviewRepository.GetByMediaId(id));
         }
 
-        //get reviews of all the followers
-        // GET api/<ReviewController>/5
-        [HttpGet("{id}")]
-        public IActionResult GetReviewByFollowers(int id)
-        {
-            var followers = _userRepository.GetFollowers(id);
-
-            //get reviews of all the ids in followers
-            return Ok(_reviewRepository.GetByUserId());
-
-        }
-
-        //get reviews of all the people you are following
+        //get reviews of all the following
         // GET api/<ReviewController>/5
         [HttpGet("{id}")]
         public IActionResult GetReviewByFollowing(int id)
         {
-            var following = _userRepository.GetFollowing(id);
+            var followers = _userRepository.GetFollowing(id);
+            List<Review> followingReview = new List<Review>();
 
-            //get reviews of all the ids in following
-            return Ok(_reviewRepository.GetByUserId());
+            foreach (var item in followers)
+            {
+                foreach(var item2 in _reviewRepository.GetByUserId(item.UserId))
+                {
+                    followingReview.Add(item2);
+                }
+            }
 
+            followingReview.Sort((x, y) => DateTime.Compare(x.ReviewDate, y.ReviewDate)); //still working
+
+            return Ok(followingReview);
         }
     }
 }
