@@ -99,5 +99,20 @@ namespace TheHub.WebApp.Controllers
                 return Ok();
             }
         }
+
+        [HttpGet("UnapprovedMedia")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetUnapprovedMedia()
+        {
+            var unapprovedMedias = _mediaRepository.GetUnapprovedMedia();
+            if (unapprovedMedias == null)
+            {
+                return NotFound();
+            }
+            else {
+                return Ok(_mediaRepository.GetUnapprovedMedia());
+            }
+        }
     }
 }

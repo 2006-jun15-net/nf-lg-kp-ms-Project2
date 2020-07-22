@@ -11,11 +11,16 @@ namespace TheHub.Library.Model
         public int? MediaTypeId { get; set; }
 
         public string _mediaName { get; set; }
+        public string Composer { get; set; }
+
         public string Description { get; set; }
 
         public int? Rating { get; set; }
 
         public string MediaUrl { get; set; }
+
+        public bool Approved { get; set; }
+        
 
         public string MediaName
         {

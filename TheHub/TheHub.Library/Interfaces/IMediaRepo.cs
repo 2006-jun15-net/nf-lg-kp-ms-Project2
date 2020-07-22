@@ -18,6 +18,8 @@ namespace TheHub.Library.Interfaces
 
         IEnumerable<Media> GetByReviewcount(int reviewCount);
 
+        IEnumerable<Media> GetUnapprovedMedia();
+
         void Add(Media media);
 
         void Update(Media media);

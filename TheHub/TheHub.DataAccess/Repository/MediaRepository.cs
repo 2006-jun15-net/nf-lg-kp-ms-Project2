@@ -22,10 +22,12 @@ namespace TheHub.DataAccess.Repository
             {
                 Rating = media.Rating,
                 MediaName = media.MediaName,
+                Composer = media.Composer,
                 Description = media.Description,
                 MediaTypesId = media.MediaTypeId,
                 MediaUrl = media.MediaUrl,
-                GenreId = media.GenreId
+                GenreId = media.GenreId,
+                Approved = media.Approved
             };
             _context.Media.Add(entity);
             _context.SaveChanges();
@@ -44,11 +46,13 @@ namespace TheHub.DataAccess.Repository
             {
                 MediaId = m.MediaId,
                 MediaName = m.MediaName,
+                Composer = m.Composer,
                 Rating = m.Rating,
                 Description = m.Description,
                 MediaTypeId = m.MediaId,
                 MediaUrl = m.MediaUrl,
-                GenreId = m.GenreId
+                GenreId = m.GenreId,
+                Approved = m.Approved
             });
         }
 
@@ -59,11 +63,13 @@ namespace TheHub.DataAccess.Repository
             {
                 MediaId = m.MediaId,
                 MediaName = m.MediaName,
+                Composer = m.Composer,
                 Rating = m.Rating,
                 Description = m.Description,
                 MediaTypeId = m.MediaTypesId,
                 MediaUrl = m.MediaUrl,
-                GenreId = m.GenreId
+                GenreId = m.GenreId,
+                Approved = m.Approved
             });
         }
 
@@ -72,13 +78,15 @@ namespace TheHub.DataAccess.Repository
             var entity = _context.Media.Find(id);
             return new Media
             {
-               MediaId = entity.MediaId,
-               MediaName = entity.MediaName,
-               Rating = entity.Rating,
-               Description = entity.Description,
-               MediaTypeId = entity.MediaTypesId,
-               MediaUrl = entity.MediaUrl,
-               GenreId = entity.GenreId
+                MediaId = entity.MediaId,
+                MediaName = entity.MediaName,
+                Composer = entity.Composer,
+                Rating = entity.Rating,
+                Description = entity.Description,
+                MediaTypeId = entity.MediaTypesId,
+                MediaUrl = entity.MediaUrl,
+                GenreId = entity.GenreId,
+                Approved = entity.Approved
             };
         }
 
@@ -89,11 +97,13 @@ namespace TheHub.DataAccess.Repository
             {
                 MediaId = m.MediaId,
                 MediaName = m.MediaName,
+                Composer = m.Composer,
                 Rating = m.Rating,
                 Description = m.Description,
                 MediaTypeId = m.MediaTypesId,
                 MediaUrl = m.MediaUrl,
-                GenreId = m.GenreId
+                GenreId = m.GenreId,
+                Approved = m.Approved
             });
         }
 
@@ -104,11 +114,13 @@ namespace TheHub.DataAccess.Repository
             {
                 MediaId = m.MediaId,
                 MediaName = m.MediaName,
+                Composer = m.Composer,
                 Rating = m.Rating,
                 Description = m.Description,
                 MediaTypeId = m.MediaTypesId,
                 MediaUrl = m.MediaUrl,
-                GenreId = m.GenreId
+                GenreId = m.GenreId,
+                Approved = m.Approved
             });
         }
 
@@ -119,11 +131,13 @@ namespace TheHub.DataAccess.Repository
             {
                 MediaId = entity.MediaId,
                 MediaName = entity.MediaName,
+                Composer = entity.Composer,
                 Rating = entity.Rating,
                 Description = entity.Description,
                 MediaTypeId = entity.MediaTypesId,
                 MediaUrl = entity.MediaUrl,
-                GenreId = entity.GenreId
+                GenreId = entity.GenreId,
+                Approved = entity.Approved
             };
         }
 
@@ -132,9 +146,29 @@ namespace TheHub.DataAccess.Repository
             var entity = _context.Media.Find(media.MediaId);
             entity.MediaName = media.MediaName;
             entity.Description = media.Description;
+            entity.Composer = media.Composer;
             entity.Rating = media.Rating;
             entity.MediaUrl = media.MediaUrl;
+            entity.Approved = media.Approved;
+            entity.GenreId = media.GenreId;
             _context.SaveChanges();
+        }
+
+       public IEnumerable<Media> GetUnapprovedMedia()
+       {
+            var entities = _context.Media.Where(m => m.Approved == false);
+            return entities.Select(m => new Media
+            {
+                MediaId = m.MediaId,
+                MediaName = m.MediaName,
+                Composer = m.Composer,
+                Rating = m.Rating,
+                Description = m.Description,
+                MediaTypeId = m.MediaTypesId,
+                MediaUrl = m.MediaUrl,
+                GenreId = m.GenreId,
+                Approved = m.Approved
+            });
         }
     }
 }
