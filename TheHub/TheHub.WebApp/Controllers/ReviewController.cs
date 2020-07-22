@@ -22,38 +22,6 @@ namespace TheHub.WebApp.Controllers
             _userRepository = userRepository;
         }
 
-        // GET: api/<ReviewController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<ReviewController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<ReviewController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ReviewController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ReviewController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-
         //get reviews by media id
         // GET api/<ReviewController>/5
         [HttpGet("{id}")]
@@ -67,10 +35,10 @@ namespace TheHub.WebApp.Controllers
         [HttpGet("{id}")]
         public IActionResult GetReviewByFollowing(int id)
         {
-            var followers = _userRepository.GetFollowing(id);
+            var following = _userRepository.GetFollowing(id);
             List<Review> followingReview = new List<Review>();
 
-            foreach (var item in followers)
+            foreach (var item in following)
             {
                 foreach(var item2 in _reviewRepository.GetByUserId(item.UserId))
                 {
