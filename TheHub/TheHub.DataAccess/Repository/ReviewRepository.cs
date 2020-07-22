@@ -22,7 +22,7 @@ namespace TheHub.DataAccess.Repository
         /// Creates a review in the database
         /// </summary>
         /// <param name="review">The Review</param>
-        public void Add(Review review)
+        public int Add(Review review)
         {
             var entity = new Reviews
             {
@@ -34,6 +34,7 @@ namespace TheHub.DataAccess.Repository
             };
             _context.Reviews.Add(entity);
             _context.SaveChanges();
+            return entity.ReviewId;
         }
 
         /// <summary>

@@ -11,49 +11,79 @@ using TheHub.Library.Model;
 namespace TheHub.WebApp.Controllers
 {
     [Route("api/[controller]")]
-    public class ReviewController : Controller
+    [ApiController]
+    public class ReviewController : ControllerBase
     {
+        private readonly ICommentRepo _commentRepository;
         private readonly IReviewRepo _reviewRepository;
         private readonly IUserRepo _userRepository;
-
-        public ReviewController(IReviewRepo reviewRepository, IUserRepo userRepository)
+        public ReviewController(IReviewRepo reviewRepository, IUserRepo userRepository, ICommentRepo commentRepository)
         {
             _reviewRepository = reviewRepository;
             _userRepository = userRepository;
+            _commentRepository = commentRepository;
         }
 
-        // GET: api/<ReviewController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        // GET api/review/comment/5
+        [HttpGet("comment/{id}")]
+        public IActionResult GetCommentById(int id)
         {
-            return new string[] { "value1", "value2" };
+            if(_commentRepository.GetById(id) != null)
+            {
+                var comment = _commentRepository.GetById(id);
+                return Ok(comment);
+            }
+            else
+            {
+                return NotFound();
+            }
+            
         }
-
-        // GET api/<ReviewController>/5
+<<<<<<< HEAD
+      
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult getReviewById(int id)
         {
-            return "value";
+            return Ok(_reviewRepository.GetById(id));
         }
+=======
+>>>>>>> c16abd75079275a84f1f923a2c082fa526d144c7
 
+        // POST api/review/AddComment
+        [HttpPost("AddComment")]
+        public IActionResult AddComment([FromBody] Comment comment)
+        {
+            try
+            {
+                int CommentId = _commentRepository.Add(comment);
+                var newComment = _commentRepository.GetById(CommentId);
+                return CreatedAtAction(nameof(GetCommentById), new { id = CommentId }, newComment);
+            }
+            catch (InvalidOperationException)
+            {
+                return Conflict();
+            }
+            
+      
+        }
         // POST api/<ReviewController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("CreateReview")]
+        public IActionResult CreateReview([FromBody] Review review)
         {
-        }
+            Review newR = new Review
+            {
+                Rating = review.Rating,
+                MediaId = review.MediaId,
+                UserId = review.UserId,
+                Content = review.Content
+            };
+            int Reviewid =_reviewRepository.Add(newR);
 
-        // PUT api/<ReviewController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+            var newReview = _reviewRepository.GetById(Reviewid);
 
-        // DELETE api/<ReviewController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+            return CreatedAtAction(nameof(getReviewById), new {id = Reviewid}, newReview);
 
+        }
         //get reviews by media id
         // GET api/<ReviewController>/5
         [HttpGet("{id}")]
@@ -67,10 +97,10 @@ namespace TheHub.WebApp.Controllers
         [HttpGet("{id}")]
         public IActionResult GetReviewByFollowing(int id)
         {
-            var followers = _userRepository.GetFollowing(id);
+            var following = _userRepository.GetFollowing(id);
             List<Review> followingReview = new List<Review>();
 
-            foreach (var item in followers)
+            foreach (var item in following)
             {
                 foreach(var item2 in _reviewRepository.GetByUserId(item.UserId))
                 {

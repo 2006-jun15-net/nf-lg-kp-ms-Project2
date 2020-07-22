@@ -8,7 +8,7 @@ namespace TheHub.Library.Interfaces
     {
         Comment GetById(int id);
         IEnumerable<Comment> GetByReviewId(int id);
-        void Add(Comment comment);
+        int Add(Comment comment);
         void DeleteById(int id);
         void Update(Comment comment);
     }
