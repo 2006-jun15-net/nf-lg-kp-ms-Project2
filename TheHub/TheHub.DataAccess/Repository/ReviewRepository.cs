@@ -65,6 +65,10 @@ namespace TheHub.DataAccess.Repository
         public Review GetById(int id)
         {
             var entity = _context.Reviews.Find(id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             return new Review
             {
                 ReviewId = entity.ReviewId,
@@ -166,6 +170,10 @@ namespace TheHub.DataAccess.Repository
         public void Update(Review review)
         {
             var entity = _context.Reviews.Find(review.ReviewId);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             entity.Content = review.Content;
             entity.ReviewDate = DateTime.Now;
             entity.Rating = review.Rating;

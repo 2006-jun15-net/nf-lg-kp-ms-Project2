@@ -80,6 +80,22 @@ namespace TheHub.WebApp.Controllers
             
 
         }
+        //GET api/media/5/rating
+        [HttpGet("{id}/rating")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetMediaRating(int id)
+        {
+            try
+            {
+                var media = _mediaRepository.GetById(id);
+                return Ok(media.Rating);
+            }
+            catch (ArgumentNullException)
+            {
+                return NotFound();
+            }
+        }
 
         // DELETE api/<MediaController>/5
         [HttpDelete("{id}")]
