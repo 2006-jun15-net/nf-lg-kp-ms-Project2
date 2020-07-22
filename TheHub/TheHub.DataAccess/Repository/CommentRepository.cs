@@ -22,11 +22,10 @@ namespace TheHub.DataAccess.Repository
         /// Create a Comment in the database
         /// </summary>
         /// <param name="comment">The Comment</param>
-        public void Add(Comment comment)
+        public int Add(Comment comment)
         {
             var entity = new Comments
             {
-                CommentId = comment.CommentId,
                 Content = comment.Content,
                 ReviewId = comment.ReviewId,
                 UserId = comment.UserId,
@@ -34,6 +33,7 @@ namespace TheHub.DataAccess.Repository
             };
             _context.Comments.Add(entity);
             _context.SaveChanges();
+            return entity.CommentId;
         }
 
         /// <summary>
