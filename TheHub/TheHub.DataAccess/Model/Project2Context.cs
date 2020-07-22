@@ -20,7 +20,7 @@ namespace TheHub.DataAccess.Model
         public virtual DbSet<Following> Following { get; set; }
         public virtual DbSet<Genre> Genre { get; set; }
         public virtual DbSet<Media> Media { get; set; }
-        public virtual DbSet<MediaType> MediaType { get; set; }
+        //public virtual DbSet<MediaType> MediaType { get; set; }
         public virtual DbSet<MediaTypes> MediaTypes { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
         public virtual DbSet<ReviewLikes> ReviewLikes { get; set; }
@@ -98,10 +98,10 @@ namespace TheHub.DataAccess.Model
                     .HasConstraintName("FK_Media_MediaTypesId_MediaTypes");
             });
 
-            modelBuilder.Entity<MediaType>(entity =>
-            {
-                entity.Property(e => e.MediaTypeName).HasMaxLength(255);
-            });
+            //modelBuilder.Entity<MediaType>(entity =>
+            //{
+            //    entity.Property(e => e.MediaTypeName).HasMaxLength(255);
+            //});
 
             modelBuilder.Entity<MediaTypes>(entity =>
             {
