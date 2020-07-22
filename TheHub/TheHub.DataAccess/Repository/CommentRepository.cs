@@ -118,5 +118,18 @@ namespace TheHub.DataAccess.Repository
             entity.CommentDate = DateTime.Now;
             _context.SaveChanges();
         }
+
+        public void CreateLike(int commentId, int userId)
+        {
+            var entity = new CommentLikes
+            {
+                UserId = userId,
+                CommentId = commentId
+            };
+            _context.CommentLikes.Add(entity);
+            _context.SaveChanges();
+
+
+        }
     }
 }

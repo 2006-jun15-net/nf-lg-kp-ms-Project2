@@ -60,9 +60,8 @@ namespace TheHub.WebApp.Controllers
             {
                 return Conflict();
             }
-            
-      
         }
+
         // POST api/<ReviewController>
         [HttpPost("CreateReview")]
         public IActionResult CreateReview([FromBody] Review review)
@@ -83,7 +82,7 @@ namespace TheHub.WebApp.Controllers
         }
         //get reviews by media id
         // GET api/<ReviewController>/5
-        [HttpGet("{id}")]
+        [HttpGet("media/{id}")]
         public IActionResult GetReviewByMediaId(int id)
         {
             return Ok(_reviewRepository.GetByMediaId(id));
@@ -91,7 +90,7 @@ namespace TheHub.WebApp.Controllers
 
         //get reviews of all the following
         // GET api/<ReviewController>/5
-        [HttpGet("{id}")]
+        [HttpGet("following/{id}")]
         public IActionResult GetReviewByFollowing(int id)
         {
             var following = _userRepository.GetFollowing(id);
@@ -109,5 +108,15 @@ namespace TheHub.WebApp.Controllers
 
             return Ok(followingReview);
         }
+
+        [HttpPost("like/{reviewId}/{userId}")]
+        public IActionResult ReviewLike(int reviewId, int userId)
+        {
+            _reviewRepository.CreateLike(reviewId, userId);
+
+            return Ok();
+        }
+
+        
     }
 }

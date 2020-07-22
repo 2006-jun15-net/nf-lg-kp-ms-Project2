@@ -65,7 +65,9 @@ namespace TheHub.DataAccess.Repository
         /// <returns>The Review</returns>
         public Review GetById(int id)
         {
-            var entity = _context.Reviews.Find(id);
+            var entity = _context.Reviews
+                .Include(r => r.ReviewLikes)
+                .FirstOrDefault(r => r.ReviewId == id);
             if (entity == null)
             {
                 throw new ArgumentNullException();
@@ -77,7 +79,7 @@ namespace TheHub.DataAccess.Repository
                 Rating = entity.Rating,
                 MediaId = entity.MediaId,
                 UserId = entity.UserId,
-                Likes = entity.Likes,
+                Likes = entity.ReviewLikes.Count,
                 Content = entity.Content
             };
         }
@@ -179,6 +181,19 @@ namespace TheHub.DataAccess.Repository
             entity.ReviewDate = DateTime.Now;
             entity.Rating = review.Rating;
             _context.SaveChanges();
+        }
+
+        public void CreateLike(int reviewId, int userId)
+        {
+            var entity = new ReviewLikes
+            {
+                UserId = userId,
+                ReviewId = reviewId
+            };
+            _context.ReviewLikes.Add(entity);
+            _context.SaveChanges();
+
+
         }
 
     }

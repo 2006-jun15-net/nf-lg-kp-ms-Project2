@@ -122,3 +122,5 @@ VALUES ('Action'), ('Comedy'), ('Drama'), ('Fantasy'), ('Horror'), ('Mystery'), 
 
 INSERT INTO MediaTypes (MediaTypesName)
 VALUES ('Video Games'), ('Movies'), ('Albums'), ('Books'), ('TV Shows');
+
+SELECT * FROM Users;

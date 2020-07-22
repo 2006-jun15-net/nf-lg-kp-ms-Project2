@@ -58,9 +58,9 @@ namespace TheHub.WebApp.Controllers
                 _userRepository.Update(user);
 
                 return Ok();
-
         }
 
+        
        
     }
 }
