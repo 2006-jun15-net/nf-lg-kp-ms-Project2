@@ -20,12 +20,21 @@ namespace TheHub.DataAccess.Model
         public virtual DbSet<Following> Following { get; set; }
         public virtual DbSet<Genre> Genre { get; set; }
         public virtual DbSet<Media> Media { get; set; }
-        //public virtual DbSet<MediaType> MediaType { get; set; }
+        public virtual DbSet<MediaType> MediaType { get; set; }
         public virtual DbSet<MediaTypes> MediaTypes { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
         public virtual DbSet<ReviewLikes> ReviewLikes { get; set; }
         public virtual DbSet<Reviews> Reviews { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=tcp:patel.database.windows.net,1433;Initial Catalog=Project2;Persist Security Info=False;User ID=kirti;Password=Swamishreeji1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,7 +58,7 @@ namespace TheHub.DataAccess.Model
             modelBuilder.Entity<Comments>(entity =>
             {
                 entity.HasKey(e => e.CommentId)
-                    .HasName("PK__Comments__C3B4DFCAEFF6CAE3");
+                    .HasName("PK__Comments__C3B4DFCA970FC13E");
 
                 entity.Property(e => e.Content)
                     .IsRequired()
@@ -81,6 +90,8 @@ namespace TheHub.DataAccess.Model
 
             modelBuilder.Entity<Media>(entity =>
             {
+                entity.Property(e => e.Composer).HasMaxLength(255);
+
                 entity.Property(e => e.MediaName).HasMaxLength(255);
 
                 entity.Property(e => e.MediaUrl).HasColumnName("MediaURL");
@@ -96,7 +107,11 @@ namespace TheHub.DataAccess.Model
                     .HasConstraintName("FK_Media_MediaTypesId_MediaTypes");
             });
 
-          
+            modelBuilder.Entity<MediaType>(entity =>
+            {
+                entity.Property(e => e.MediaTypeName).HasMaxLength(255);
+            });
+
             modelBuilder.Entity<MediaTypes>(entity =>
             {
                 entity.Property(e => e.MediaTypesName).HasMaxLength(255);
@@ -105,7 +120,7 @@ namespace TheHub.DataAccess.Model
             modelBuilder.Entity<Notifications>(entity =>
             {
                 entity.HasKey(e => e.NotificationId)
-                    .HasName("PK__Notifica__20CF2E126B04379C");
+                    .HasName("PK__Notifica__20CF2E122833CCBC");
 
                 entity.Property(e => e.NotificationType)
                     .IsRequired()
@@ -144,7 +159,7 @@ namespace TheHub.DataAccess.Model
             modelBuilder.Entity<Reviews>(entity =>
             {
                 entity.HasKey(e => e.ReviewId)
-                    .HasName("PK__Reviews__74BC79CE38CE3296");
+                    .HasName("PK__Reviews__74BC79CE5CE77355");
 
                 entity.Property(e => e.Content).IsRequired();
 
@@ -162,14 +177,14 @@ namespace TheHub.DataAccess.Model
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.HasKey(e => e.UserId)
-                    .HasName("PK__Users__1788CC4C4C6C18A7");
+                    .HasName("PK__Users__1788CC4CEE7218B0");
 
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__Users__A9D10534716AE8EA")
+                    .HasName("UQ__Users__A9D1053443A70A57")
                     .IsUnique();
 
                 entity.HasIndex(e => e.UserName)
-                    .HasName("UQ__Users__C9F28456CE47F1DC")
+                    .HasName("UQ__Users__C9F28456415B317F")
                     .IsUnique();
 
                 entity.Property(e => e.Bio)

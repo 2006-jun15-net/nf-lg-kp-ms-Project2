@@ -4,12 +4,12 @@ CREATE DATABASE Project2;
 -- DROP TABLE Following;
 -- DROP TABLE CommentLikes;
 -- DROP TABLE ReviewLikes;
--- DROP TABLE Category;
 -- DROP TABLE Media;
 -- DROP TABLE Reviews;
 -- DROP TABLE Comments;
 -- DROP TABLE Notifications;
 -- DROP TABLE Genre;
+-- DROP TABLE MediaTypes;
 
 CREATE TABLE Users (
     UserId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -19,7 +19,8 @@ CREATE TABLE Users (
     Password NVARCHAR (255) NOT NULL,
     Bio NVARCHAR(255) NOT NULL,
     Email NVARCHAR(255) NOT NULL UNIQUE,
-    Picture NVARCHAR(255)
+    Picture NVARCHAR(255),
+    AdminUser BIT NOT NULL
 );
 
 CREATE TABLE Following (
@@ -48,6 +49,8 @@ CREATE TABLE Media (
     MediaTypesId INT,
     MediaURL NVARCHAR(MAX),
     GenreId INT,
+    Approved BIT NOT NULL,
+    Composer NVARCHAR(255),
     CONSTRAINT FK_Media_MediaTypesId_MediaTypes FOREIGN KEY (MediaTypesId) 
         REFERENCES MediaTypes (MediaTypesId),
     CONSTRAINT FK_Media_GenreId_Genre FOREIGN KEY (GenreId) 
@@ -112,4 +115,10 @@ CREATE TABLE Notifications (
         REFERENCES Users (UserId)
 );
 
-SELECT * FROM Users;
+INSERT INTO Genre (GenreName)
+VALUES ('Action'), ('Comedy'), ('Drama'), ('Fantasy'), ('Horror'), ('Mystery'), ('Romance'), 
+('Thriller'), ('Western'), ('Blues Music'), ('Jazz Music'), ('Rhythm and Blues Music'), 
+('Rock and Roll Music'), ('Rock Music'), ('Country Music'), ('Soul Music'), ('Dance Music'), ('Hip Hop Music'), ('Anime');
+
+INSERT INTO MediaTypes (MediaTypesName)
+VALUES ('Video Games'), ('Movies'), ('Albums'), ('Books'), ('TV Shows');

@@ -17,6 +17,8 @@ namespace TheHub.DataAccess.Model
         public int? MediaTypesId { get; set; }
         public string MediaUrl { get; set; }
         public int? GenreId { get; set; }
+        public bool Approved { get; set; }
+        public string Composer { get; set; }
 
         public virtual Genre Genre { get; set; }
         public virtual MediaTypes MediaTypes { get; set; }

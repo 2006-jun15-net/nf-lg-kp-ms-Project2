@@ -24,6 +24,7 @@ namespace TheHub.DataAccess.Model
         public string Bio { get; set; }
         public string Email { get; set; }
         public string Picture { get; set; }
+        public bool AdminUser { get; set; }
 
         public virtual ICollection<CommentLikes> CommentLikes { get; set; }
         public virtual ICollection<Comments> Comments { get; set; }
