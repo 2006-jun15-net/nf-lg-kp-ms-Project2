@@ -14,18 +14,52 @@ namespace TheHub.WebApp.Controllers
     [ApiController]
     public class ReviewController : ControllerBase
     {
+        private readonly ICommentRepo _commentRepository;
         private readonly IReviewRepo _reviewRepository;
         private readonly IUserRepo _userRepository;
-        public ReviewController(IReviewRepo reviewRepository, IUserRepo userRepository)
+        public ReviewController(IReviewRepo reviewRepository, IUserRepo userRepository, ICommentRepo commentRepository)
         {
             _reviewRepository = reviewRepository;
             _userRepository = userRepository;
+            _commentRepository = commentRepository;
         }
-      
 
+        // GET api/review/comment/5
+        [HttpGet("comment/{id}")]
+        public IActionResult GetCommentById(int id)
+        {
+            if(_commentRepository.GetById(id) != null)
+            {
+                var comment = _commentRepository.GetById(id);
+                return Ok(comment);
+            }
+            else
+            {
+                return NotFound();
+            }
+            
+        }
+
+        // POST api/review/AddComment
+        [HttpPost("AddComment")]
+        public IActionResult AddComment([FromBody] Comment comment)
+        {
+            try
+            {
+                int CommentId = _commentRepository.Add(comment);
+                var newComment = _commentRepository.GetById(CommentId);
+                return CreatedAtAction(nameof(GetCommentById), new { id = CommentId }, newComment);
+            }
+            catch (InvalidOperationException)
+            {
+                return Conflict();
+            }
+            
+      
+        }
         // POST api/<ReviewController>
         [HttpPost("CreateReview")]
-        public IActionResult CreateReveiw([FromBody] Review review)
+        public IActionResult CreateReview([FromBody] Review review)
         {
             Review newR = new Review
             {
