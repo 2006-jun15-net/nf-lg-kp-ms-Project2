@@ -32,7 +32,9 @@ namespace TheHub.DataAccess.Repository
                 Password = user.Password,
                 Bio = user.Bio,
                 Picture = user.Picture,
-                Email = user.Email
+                Email = user.Email,
+                AdminUser = user.AdminUser
+
             };
             _context.Users.Add(entity);
             _context.SaveChanges();

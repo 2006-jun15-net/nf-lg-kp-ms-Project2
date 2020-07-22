@@ -28,13 +28,13 @@ namespace TheHub.Library.Model
         [Required(ErrorMessage = "Confirm Password is required")]
         [StringLength(255, ErrorMessage = "Must be between 5 and 255 characters", MinimumLength = 5)]
         [DataType(DataType.Password)]
-        [Compare("_password")]
+        [Compare("Password")]
         public string ConfirmPassword { get; set; }
         public string Picture { get; set; }
 
         public string Bio { get; set; }
 
-        public bool Admin { get; set; }
+        public bool AdminUser { get; set; }
 
         List<User> Followers { get; set; }
 
