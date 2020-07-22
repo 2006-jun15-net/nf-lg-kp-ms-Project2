@@ -15,10 +15,11 @@ namespace TheHub.WebApp.Controllers
     public class ReviewController : ControllerBase
     {
         private readonly IReviewRepo _reviewRepository;
-
-        public ReviewController(IReviewRepo Repository)
+        private readonly IUserRepo _userRepository;
+        public ReviewController(IReviewRepo reviewRepository, IUserRepo userRepository)
         {
-            _reviewRepository = Repository;
+            _reviewRepository = reviewRepository;
+            _userRepository = userRepository;
         }
       
 
@@ -38,6 +39,35 @@ namespace TheHub.WebApp.Controllers
             var newReview = _reviewRepository.GetById(newR.ReviewId);
 
             return Created(""+review.ReviewId+"",newReview);
+
+        }
+        //get reviews by media id
+        // GET api/<ReviewController>/5
+        [HttpGet("{id}")]
+        public IActionResult GetReviewByMediaId(int id)
+        {
+            return Ok(_reviewRepository.GetByMediaId(id));
+        }
+
+        //get reviews of all the following
+        // GET api/<ReviewController>/5
+        [HttpGet("{id}")]
+        public IActionResult GetReviewByFollowing(int id)
+        {
+            var following = _userRepository.GetFollowing(id);
+            List<Review> followingReview = new List<Review>();
+
+            foreach (var item in following)
+            {
+                foreach(var item2 in _reviewRepository.GetByUserId(item.UserId))
+                {
+                    followingReview.Add(item2);
+                }
+            }
+
+            followingReview.Sort((x, y) => DateTime.Compare(x.ReviewDate, y.ReviewDate)); //still working
+
+            return Ok(followingReview);
         }
     }
 }
