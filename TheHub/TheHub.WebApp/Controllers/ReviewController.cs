@@ -39,15 +39,12 @@ namespace TheHub.WebApp.Controllers
             }
             
         }
-<<<<<<< HEAD
       
         [HttpGet("{id}")]
         public IActionResult getReviewById(int id)
         {
             return Ok(_reviewRepository.GetById(id));
         }
-=======
->>>>>>> c16abd75079275a84f1f923a2c082fa526d144c7
 
         // POST api/review/AddComment
         [HttpPost("AddComment")]
