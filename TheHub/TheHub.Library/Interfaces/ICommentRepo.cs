@@ -11,5 +11,6 @@ namespace TheHub.Library.Interfaces
         int Add(Comment comment);
         void DeleteById(int id);
         void Update(Comment comment);
+        void Save();
     }
 }

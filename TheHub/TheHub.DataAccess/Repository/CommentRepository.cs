@@ -110,5 +110,10 @@ namespace TheHub.DataAccess.Repository
             entity.CommentDate = DateTime.Now;
             _context.SaveChanges();
         }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
     }
 }

@@ -17,10 +17,14 @@ namespace TheHub.WebApp.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepo _userRepository;
+        private readonly IReviewRepo _reviewRepository;
+        private readonly ICommentRepo _commentRepository;
 
-        public UserController(IUserRepo userRepository)
+        public UserController(IUserRepo userRepository, IReviewRepo reviewRepository, ICommentRepo commentRepository)
         {
             _userRepository = userRepository;
+            _reviewRepository = reviewRepository;
+            _commentRepository = commentRepository;
         }
 
         // GET: api/<UserController>
@@ -46,10 +50,7 @@ namespace TheHub.WebApp.Controllers
            var newUser = _userRepository.GetByUserName(user.UserName);
 
             return CreatedAtAction(nameof(GetUserById),new { id = newUser.UserId }, newUser);
-            
         }
-
-      
 
         // PUT api/<UserController>/5
         [HttpPut("Update/{id}")]
@@ -58,9 +59,35 @@ namespace TheHub.WebApp.Controllers
                 _userRepository.Update(user);
 
                 return Ok();
-
         }
 
-       
+        //like reviews
+        [HttpPost("/{id}")] // not sure what the path would be for this
+        public IActionResult ReviewLike([FromBody] bool status, int id)
+        {
+            if (status == false)
+                return NotFound();
+
+            var review = _reviewRepository.GetById(id);
+            review.Likes += 1;
+            _reviewRepository.Save();
+
+            return Ok(review.Likes);
+        }
+
+        //like comments
+        [HttpPost("/{id}")] // not sure what the path would be for this
+        public IActionResult CommentLike([FromBody] bool status, int id)
+        {
+            if (status == false)
+                return NotFound();
+
+            var comment = _commentRepository.GetById(id);
+            comment.Likes += 1;
+            _commentRepository.Save();
+
+            return Ok(comment.Likes);
+        }
+
     }
 }

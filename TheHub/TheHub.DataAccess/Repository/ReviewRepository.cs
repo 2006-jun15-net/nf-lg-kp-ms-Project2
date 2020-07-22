@@ -173,5 +173,9 @@ namespace TheHub.DataAccess.Repository
             _context.SaveChanges();
         }
 
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
     }
 }

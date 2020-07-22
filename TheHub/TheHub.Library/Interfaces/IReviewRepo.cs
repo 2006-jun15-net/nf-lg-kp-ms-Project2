@@ -21,5 +21,7 @@ namespace TheHub.Library.Interfaces
         void Update(Review review);
 
         void Delete(int id);
+
+        void Save();
     }
 }
