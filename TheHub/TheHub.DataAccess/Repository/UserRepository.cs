@@ -144,7 +144,7 @@ namespace TheHub.DataAccess.Repository
         /// <param name="user">The updated User</param>
         public void Update(User user)
         {
-            var entity = _context.Users.Find(user.UserId);
+            var entity = _context.Users.First(c  => c.UserId==user.UserId);
             entity.FirstName = user.FirstName;
             entity.LastName = user.LastName;
             entity.UserName = user.UserName;
@@ -152,7 +152,7 @@ namespace TheHub.DataAccess.Repository
             entity.Bio = user.Bio;
             entity.Email = user.Email;
             entity.Picture = user.Picture;
-
+            _context.Users.Update(entity);
             _context.SaveChanges();
         }
     }

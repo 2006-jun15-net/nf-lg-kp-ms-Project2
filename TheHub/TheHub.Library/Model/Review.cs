@@ -11,6 +11,11 @@ namespace TheHub.Library.Model
         private int _mediaId;
         private int _userId;
         
+        public Review()
+        {
+            ReviewDate = DateTime.Now;
+        }
+
         public DateTime ReviewDate { get; set; }
         public int? Likes { get; set; }
         public int? Rating { get; set; }

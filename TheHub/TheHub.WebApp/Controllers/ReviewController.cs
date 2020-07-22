@@ -11,17 +11,36 @@ using TheHub.Library.Model;
 namespace TheHub.WebApp.Controllers
 {
     [Route("api/[controller]")]
-    public class ReviewController : Controller
+    [ApiController]
+    public class ReviewController : ControllerBase
     {
         private readonly IReviewRepo _reviewRepository;
         private readonly IUserRepo _userRepository;
-
         public ReviewController(IReviewRepo reviewRepository, IUserRepo userRepository)
         {
             _reviewRepository = reviewRepository;
             _userRepository = userRepository;
         }
+      
 
+        // POST api/<ReviewController>
+        [HttpPost("CreateReview")]
+        public IActionResult CreateReveiw([FromBody] Review review)
+        {
+            Review newR = new Review
+            {
+                Rating = review.Rating,
+                MediaId = review.MediaId,
+                UserId = review.UserId,
+                Content = review.Content
+            };
+            _reviewRepository.Add(newR);
+
+            var newReview = _reviewRepository.GetById(newR.ReviewId);
+
+            return Created(""+review.ReviewId+"",newReview);
+
+        }
         //get reviews by media id
         // GET api/<ReviewController>/5
         [HttpGet("{id}")]
