@@ -56,6 +56,10 @@ namespace TheHub.DataAccess.Repository
             var entity = _context.Comments
                 .Include(c => c.CommentLikes)
                 .First(c => c.CommentId == id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             List<User> likers = new List<User>();
             foreach(var line in entity.CommentLikes)
             {
@@ -106,6 +110,10 @@ namespace TheHub.DataAccess.Repository
         public void Update(Comment comment)
         {
             var entity = _context.Comments.Find(comment.CommentId);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             entity.Content = comment.Content;
             entity.CommentDate = DateTime.Now;
             _context.SaveChanges();

@@ -66,6 +66,10 @@ namespace TheHub.DataAccess.Repository
         public Notification GetById(int id)
         {
             var entity = _context.Notifications.Find(id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             return new Notification
             {
                 NotificationId = entity.NotificationId,

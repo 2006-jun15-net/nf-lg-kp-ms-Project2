@@ -46,6 +46,10 @@ namespace TheHub.DataAccess.Repository
         public MediaType GetById(int id)
         {
             var entity = _context.MediaTypes.Find(id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             return new MediaType
             {
                 Id = entity.MediaTypesId,
@@ -56,6 +60,10 @@ namespace TheHub.DataAccess.Repository
         public void Update(MediaType mediaType)
         {
             var entity = _context.MediaTypes.Find(mediaType.Id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             entity.MediaTypesName = mediaType.Name;
             _context.SaveChanges();
         }

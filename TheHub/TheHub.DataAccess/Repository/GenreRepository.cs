@@ -45,6 +45,10 @@ namespace TheHub.DataAccess.Repository
         public Genre GetById(int id)
         {
             var entity = _context.Genre.Find(id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             return new Genre
             {
                 GenreId = entity.GenreId,
@@ -55,6 +59,10 @@ namespace TheHub.DataAccess.Repository
         public void Update(Genre genre)
         {
             var entity = _context.Genre.Find(genre.GenreId);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             entity.GenreName = genre.GenreName;
             _context.SaveChanges();
         }

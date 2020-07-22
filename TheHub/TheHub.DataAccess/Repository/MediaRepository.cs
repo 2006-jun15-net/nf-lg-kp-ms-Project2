@@ -76,6 +76,10 @@ namespace TheHub.DataAccess.Repository
         public Media GetById(int id)
         {
             var entity = _context.Media.Find(id);
+            if(entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             return new Media
             {
                 MediaId = entity.MediaId,

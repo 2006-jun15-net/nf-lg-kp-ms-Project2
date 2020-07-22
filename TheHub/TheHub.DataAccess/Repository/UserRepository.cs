@@ -56,6 +56,10 @@ namespace TheHub.DataAccess.Repository
         public User GetById(int id)
         {
             var entity = _context.Users.Find(id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             return new User
             {
                 UserId = entity.UserId,
@@ -77,6 +81,10 @@ namespace TheHub.DataAccess.Repository
         public User GetByUserName(string username)
         {
             var entity = _context.Users.First(u => u.UserName.Equals(username));
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             return new User
             {
                 UserId = entity.UserId,
@@ -123,6 +131,10 @@ namespace TheHub.DataAccess.Repository
             var entity = _context.Users
                 .Include(u => u.Following)
                 .First(u => u.UserId == id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             List<User> followedUsers = new List<User>();
             foreach(var item in entity.Following)
             {
@@ -145,6 +157,10 @@ namespace TheHub.DataAccess.Repository
         public void Update(User user)
         {
             var entity = _context.Users.First(c  => c.UserId==user.UserId);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             entity.FirstName = user.FirstName;
             entity.LastName = user.LastName;
             entity.UserName = user.UserName;
