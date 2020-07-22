@@ -22,6 +22,11 @@ namespace TheHub.WebApp.Controllers
             _userRepository = userRepository;
         }
       
+        [HttpGet("{id}")]
+        public IActionResult getReviewById(int id)
+        {
+            return Ok(_reviewRepository.GetById(id));
+        }
 
         // POST api/<ReviewController>
         [HttpPost("CreateReview")]
@@ -34,11 +39,11 @@ namespace TheHub.WebApp.Controllers
                 UserId = review.UserId,
                 Content = review.Content
             };
-            _reviewRepository.Add(newR);
+            int Reviewid =_reviewRepository.Add(newR);
 
-            var newReview = _reviewRepository.GetById(newR.ReviewId);
+            var newReview = _reviewRepository.GetById(Reviewid);
 
-            return Created(""+review.ReviewId+"",newReview);
+            return CreatedAtAction(nameof(getReviewById), new {id = Reviewid}, newReview);
 
         }
         //get reviews by media id

@@ -16,7 +16,7 @@ namespace TheHub.Library.Interfaces
 
         IEnumerable<Review> SortByDate(int mediaId);
 
-        void Add(Review review);
+        int Add(Review review);
 
         void Update(Review review);
 
