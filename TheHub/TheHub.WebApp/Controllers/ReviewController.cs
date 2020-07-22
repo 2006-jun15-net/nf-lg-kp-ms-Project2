@@ -20,19 +20,7 @@ namespace TheHub.WebApp.Controllers
         {
             _reviewRepository = Repository;
         }
-        // GET: api/<ReviewController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<ReviewController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+      
 
         // POST api/<ReviewController>
         [HttpPost("CreateReview")]
@@ -50,18 +38,6 @@ namespace TheHub.WebApp.Controllers
             var newReview = _reviewRepository.GetById(newR.ReviewId);
 
             return Created(""+review.ReviewId+"",newReview);
-        }
-
-        // PUT api/<ReviewController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ReviewController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
