@@ -108,6 +108,30 @@ namespace TheHub.WebApp.Controllers
 
             return Ok(followingReview);
         }
+        
+        [HttpGet("{id}/getfeed")]
+        public IActionResult GetPublicFeed(int UserId)
+        {
+            var following = _userRepository.GetFollowing(UserId);
+            List<Review> reviews = new List<Review>();
+            foreach (var item in following)
+            {
+                var Follwingreveiw = _reviewRepository.GetByUserId(item.UserId);
+                foreach(var feedItem in Follwingreveiw)
+                {
+                    TimeSpan diff1 = DateTime.Now.Subtract(feedItem.ReviewDate);
+                    TimeSpan interval = new TimeSpan(7, 0, 00);
+                    if (interval > diff1)
+                    {
+                        reviews.Add(feedItem);
+                    }
+                }
+            }
+            var list = reviews.OrderBy(x => x.ReviewDate).ToList();
+
+            return Ok(list);
+        }
+
 
         [HttpPost("like/{reviewId}/{userId}")]
         public IActionResult ReviewLike(int reviewId, int userId)

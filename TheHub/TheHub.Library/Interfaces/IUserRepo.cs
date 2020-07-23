@@ -15,6 +15,7 @@ namespace TheHub.Library.Interfaces
         IEnumerable<User> GetFollowing(int id); 
 
         void Add(User user);
+        void AddFollower(int followerId, int followingId);
 
         void Update(User user);
 

@@ -124,21 +124,31 @@ namespace TheHub.DataAccess.Repository
         }
 
         /// <summary>
+        /// Add a user that to following list
+        /// </summary>
+        /// <param name="followerId"></param>
+        /// <param name="followingId"></param>
+        public void AddFollower(int followerId, int followingId)
+        {
+            var entity = new Following
+            {
+                FollowerId = followerId,
+                FollowingId = followerId
+            };
+            _context.Following.Add(entity);
+            _context.SaveChanges();
+        }
+        /// <summary>
         /// Gets the users that a user follows
         /// </summary>
         /// <param name="users">The User ID</param>
         /// <returns>The list of followed Users</returns>
         public IEnumerable<User> GetFollowing(int id)
         {
-            var entity = _context.Users
-                .Include(u => u.Following)
-                .First(u => u.UserId == id);
-            if (entity == null)
-            {
-                throw new ArgumentNullException();
-            }
+            var entities = _context.Following.Where(f => f.FollowerId == id);
+            
             List<User> followedUsers = new List<User>();
-            foreach(var item in entity.Following)
+            foreach(var item in entities)
             {
                 var followedUser = _context.Users.Find(item.FollowingId);
 
