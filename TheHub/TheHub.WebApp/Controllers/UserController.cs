@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using TheHub.DataAccess.Repository;
 using TheHub.Library.Interfaces;
 using TheHub.Library.Model;
@@ -37,6 +38,22 @@ namespace TheHub.WebApp.Controllers
             return Ok(_userRepository.GetById(id));
         }
 
+        // GET api/<UserController>/5
+        [HttpGet("following/{id}")]
+        public IActionResult GetFollowing(int id)
+        {
+            return Ok(_userRepository.GetFollowing(id));
+        }
+
+        // GET api/<UserController>/5
+        [HttpGet("followers/{id}")]
+        public IActionResult GetFollowers(int id)
+        {
+            return Ok(_userRepository.GetFollowers(id));
+        }
+
+
+
         // POST api/<UserController>
         [HttpPost("CreateUser")]
         public IActionResult CreateUser([FromBody] User user)
@@ -49,7 +66,14 @@ namespace TheHub.WebApp.Controllers
             
         }
 
-      
+        // Post api/<UserController>/5
+        [HttpPost("follow/{FollowerId}/{FollowingId}")]
+        public IActionResult FollowUser(int FollowerId, int FollowingId)
+        {
+            _userRepository.AddFollower(FollowerId, FollowingId);
+            return Ok();
+        }
+
 
         // PUT api/<UserController>/5
         [HttpPut("Update/{id}")]
