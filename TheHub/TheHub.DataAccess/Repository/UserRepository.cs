@@ -82,7 +82,7 @@ namespace TheHub.DataAccess.Repository
         /// <returns>The User</returns>
         public User GetByUserName(string username)
         {
-            var entity = _context.Users.First(u => u.UserName.Equals(username));
+            var entity = _context.Users.FirstOrDefault(u => u.UserName.Equals(username));
             if (entity == null)
             {
                 throw new ArgumentNullException();
@@ -132,7 +132,7 @@ namespace TheHub.DataAccess.Repository
         {
             var entity = _context.Users
                 .Include(u => u.Following)
-                .First(u => u.UserId == id);
+                .FirstOrDefault(u => u.UserId == id);
             if (entity == null)
             {
                 throw new ArgumentNullException();
@@ -158,7 +158,7 @@ namespace TheHub.DataAccess.Repository
         /// <param name="user">The updated User</param>
         public void Update(User user)
         {
-            var entity = _context.Users.First(c  => c.UserId==user.UserId);
+            var entity = _context.Users.Find(user.UserId);
             if (entity == null)
             {
                 throw new ArgumentNullException();
