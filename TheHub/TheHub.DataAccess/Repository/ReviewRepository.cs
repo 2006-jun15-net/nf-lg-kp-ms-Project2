@@ -135,7 +135,7 @@ namespace TheHub.DataAccess.Repository
         {
             var entities = _context.Reviews
                 .Include(r => r.ReviewLikes)
-                .Where(r => r.UserId == id);
+                .Where(r => r.UserId == id).ToList();
             List<Review> reviews = new List<Review>();
 
             foreach(var review in entities)

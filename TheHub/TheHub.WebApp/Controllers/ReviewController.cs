@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TheHub.Library.Interfaces;
 using TheHub.Library.Model;
@@ -108,6 +107,30 @@ namespace TheHub.WebApp.Controllers
 
             return Ok(followingReview);
         }
+        
+        [HttpGet("{id}/getfeed")]
+        public IActionResult GetPublicFeed(int id)
+        {
+            var following = _userRepository.GetFollowing(id);
+            List<Review> reviews = new List<Review>();
+            foreach (var item in following)
+            {
+                var Follwingreveiw = _reviewRepository.GetByUserId(item.UserId);
+                foreach(var feedItem in Follwingreveiw)
+                {
+                    TimeSpan diff1 = DateTime.Now.Subtract(feedItem.ReviewDate);
+                    TimeSpan interval = new TimeSpan(7, 0, 00);
+                    if (interval > diff1)
+                    {
+                        reviews.Add(feedItem);
+                    }
+                }
+            }
+            var list = reviews.OrderBy(x => x.ReviewDate).ToList();
+
+            return Ok(list);
+        }
+
 
         [HttpPost("like/{reviewId}/{userId}")]
         public IActionResult ReviewLike(int reviewId, int userId)
