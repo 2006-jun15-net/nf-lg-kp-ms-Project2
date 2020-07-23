@@ -31,9 +31,9 @@ namespace TheHub.WebApp.Controllers
             return Ok();
         }
         [HttpDelete("delete/{commentId}")]
-        public IActionResult DeleteComment([FromBody] string username,int commentId)
+        public IActionResult DeleteComment([FromBody] User user,int commentId)
         {
-            var user = _userRepository.GetByUserName(username);
+            
             if (user.AdminUser)
             {
                 _commentRepository.DeleteById(commentId);

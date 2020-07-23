@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TheHub.Library.Interfaces;
 using TheHub.Library.Model;
@@ -110,9 +109,9 @@ namespace TheHub.WebApp.Controllers
         }
         
         [HttpGet("{id}/getfeed")]
-        public IActionResult GetPublicFeed(int UserId)
+        public IActionResult GetPublicFeed(int id)
         {
-            var following = _userRepository.GetFollowing(UserId);
+            var following = _userRepository.GetFollowing(id);
             List<Review> reviews = new List<Review>();
             foreach (var item in following)
             {

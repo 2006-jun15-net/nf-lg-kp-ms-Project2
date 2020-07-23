@@ -67,7 +67,7 @@ namespace TheHub.WebApp.Controllers
         }
 
         // Post api/<UserController>/5
-        [HttpPost("follow/{FollowerId}/{FollowingId}")]
+        [HttpPut("follow/{FollowerId}/{FollowingId}")]
         public IActionResult FollowUser(int FollowerId, int FollowingId)
         {
             _userRepository.AddFollower(FollowerId, FollowingId);
@@ -77,11 +77,12 @@ namespace TheHub.WebApp.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("Update/{id}")]
-        public IActionResult UpdateProfile([FromBody][Required] User user)
+        public IActionResult UpdateProfile([FromBody][Required] User user, int id)
         {
-                _userRepository.Update(user);
+            user.UserId = id;
+            _userRepository.Update(user);
 
-                return Ok();
+            return Ok();
         }
 
         

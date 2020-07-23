@@ -133,10 +133,13 @@ namespace TheHub.DataAccess.Repository
             var entity = new Following
             {
                 FollowerId = followerId,
-                FollowingId = followerId
+                FollowingId = followingId
             };
-            _context.Following.Add(entity);
-            _context.SaveChanges();
+            if (_context.Following.FirstOrDefault(c => c.FollowerId == followerId && c.FollowingId == followingId)==null)
+            {
+                _context.Following.Add(entity);
+                _context.SaveChanges();
+            }
         }
         /// <summary>
         /// Gets the users that a user follows
@@ -145,19 +148,20 @@ namespace TheHub.DataAccess.Repository
         /// <returns>The list of followed Users</returns>
         public IEnumerable<User> GetFollowing(int id)
         {
-            var entities = _context.Following.Where(f => f.FollowerId == id);
-            
+            var entities = _context.Following.Where(f => f.FollowerId == id).ToList();
+
+
             List<User> followedUsers = new List<User>();
             foreach(var item in entities)
             {
-                var followedUser = _context.Users.Find(item.FollowingId);
+                followedUsers.Add(GetById(item.FollowingId));//var followedUser = _context.Users.Find(item.FollowingId);
 
-                followedUsers.Add(new User
-                {
-                    FirstName = followedUser.FirstName,
-                    LastName = followedUser.LastName,
-                    UserName = followedUser.UserName
-                });
+                //followedUsers.Add(new User)
+                //{
+                //    FirstName = followedUser.FirstName,
+                //    LastName = followedUser.LastName,
+                //    UserName = followedUser.UserName
+                //});
             }
             return followedUsers;
         }
