@@ -69,13 +69,13 @@ stages:
         version: '2.1.x'
 
     - task: SonarCloudPrepare@1
-    inputs:
-      SonarCloud: 'sonarcloud nf-lg-kp-ms'
-      organization: '2006-jun15-net'
-      scannerMode: 'MSBuild'
-      projectKey: '2006-jun15-net_nf-lg-kp-ms-Project2'
-      projectName: 'nf-lg-kp-ms-Project2'
-      extraProperties: sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
+      inputs:
+        SonarCloud: 'sonarcloud nf-lg-kp-ms'
+        organization: '2006-jun15-net'
+        scannerMode: 'MSBuild'
+        projectKey: '2006-jun15-net_nf-lg-kp-ms-Project2'
+        projectName: 'nf-lg-kp-ms-Project2'
+        extraProperties: sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
 
     - task: UseDotNet@2
       displayName: dotnet sdk $(sdkVersion)
