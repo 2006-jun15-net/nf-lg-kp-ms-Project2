@@ -16,6 +16,10 @@ namespace TheHub.DataAccess.Repository
             _context = context;
         }
 
+        /// <summary>
+        /// Creates a new Media in the database
+        /// </summary>
+        /// <param name="media">The Media</param>
         public void Add(Media media)
         {
             var entity = new Model.Media
@@ -33,12 +37,26 @@ namespace TheHub.DataAccess.Repository
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Deletes a Media from the database
+        /// </summary>
+        /// <param name="id">The Media Id</param>
         public void Delete(int id)
         {
-            _context.Media.Remove(_context.Media.Find(id));
+            var media = _context.Media.Find(id);
+            if(media == null)
+            {
+                throw new ArgumentNullException();
+            }
+            _context.Media.Remove(media);
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Gets a Media by Category(MediaType)
+        /// </summary>
+        /// <param name="mediaType">The MediaType</param>
+        /// <returns>The list of Media</returns>
         public IEnumerable<Media> GetByCategory(string mediaType)
         {
             var entity = _context.Media.Where(m => m.MediaTypes.MediaTypesName == mediaType);
@@ -56,6 +74,11 @@ namespace TheHub.DataAccess.Repository
             });
         }
 
+        /// <summary>
+        /// Gets the Media by Genre
+        /// </summary>
+        /// <param name="genre">The Genre</param>
+        /// <returns>The list of Media</returns>
         public IEnumerable<Media> GetByGenre(string genre)
         {
             var entity = _context.Media.Where(m => m.Genre.GenreName == genre);
@@ -73,6 +96,11 @@ namespace TheHub.DataAccess.Repository
             });
         }
 
+        /// <summary>
+        /// Gets the Media by Id
+        /// </summary>
+        /// <param name="id">The Media Id</param>
+        /// <returns>The Media</returns>
         public Media GetById(int id)
         {
             var entity = _context.Media.Find(id);
@@ -94,6 +122,11 @@ namespace TheHub.DataAccess.Repository
             };
         }
 
+        /// <summary>
+        /// Gets the Media by Rating
+        /// </summary>
+        /// <param name="rating">The Rating</param>
+        /// <returns>The Media</returns>
         public IEnumerable<Media> GetByRating(int rating)
         {
             var entity = _context.Media.Where(m => m.Rating >= rating);
@@ -111,6 +144,11 @@ namespace TheHub.DataAccess.Repository
             });
         }
 
+        /// <summary>
+        /// Gets the Media by number of the reviews
+        /// </summary>
+        /// <param name="reviewCount">The mininum number of Reviews</param>
+        /// <returns>The list of Media</returns>
         public IEnumerable<Media> GetByReviewcount(int reviewCount)
         {
             var entity = _context.Media.Where(m => m.Reviews.Count >= reviewCount);
@@ -128,6 +166,11 @@ namespace TheHub.DataAccess.Repository
             });
         }
 
+        /// <summary>
+        /// Gets a Media by title
+        /// </summary>
+        /// <param name="title">The title</param>
+        /// <returns>The Media</returns>
         public Media GetByTitle(string title)
         {
             var entity = _context.Media.First(m => m.MediaName.ToLower().Equals(title.ToLower()));
@@ -145,6 +188,10 @@ namespace TheHub.DataAccess.Repository
             };
         }
 
+        /// <summary>
+        /// Updates a Media 
+        /// </summary>
+        /// <param name="media">The updated Media</param>
         public void Update(Media media)
         {
             var entity = _context.Media.Find(media.MediaId);
@@ -158,6 +205,10 @@ namespace TheHub.DataAccess.Repository
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Gets the unapproved Media
+        /// </summary>
+        /// <returns>The unapproved Media</returns>
        public IEnumerable<Media> GetUnapprovedMedia()
        {
             var entities = _context.Media.Where(m => m.Approved == false);

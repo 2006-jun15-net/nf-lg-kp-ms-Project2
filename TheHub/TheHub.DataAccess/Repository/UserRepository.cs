@@ -46,7 +46,12 @@ namespace TheHub.DataAccess.Repository
         /// <param name="id">The User ID</param>
         public void Delete(int id)
         {
-            _context.Users.Remove(_context.Users.Find(id));
+            var user = _context.Users.Find(id);
+            if (user == null)
+            {
+                throw new ArgumentNullException();
+            }
+            _context.Users.Remove(user);
             _context.SaveChanges();
         }
 
@@ -107,7 +112,7 @@ namespace TheHub.DataAccess.Repository
         /// <returns>The list of Followers</returns>
         public IEnumerable<User> GetFollowers(int id)
         {
-            var entities = _context.Following.Where(f => f.FollowingId == id);
+            var entities = _context.Following.Where(f => f.FollowingId == id).ToList();
             List<User> followers = new List<User>();
             foreach (var item in entities)
             {
@@ -124,6 +129,24 @@ namespace TheHub.DataAccess.Repository
         }
 
         /// <summary>
+        /// Add a user to following list
+        /// </summary>
+        /// <param name="followerId"></param>
+        /// <param name="followingId"></param>
+        public void AddFollower(int followerId, int followingId)
+        {
+            var entity = new Following
+            {
+                FollowerId = followerId,
+                FollowingId = followingId
+            };
+            if (_context.Following.FirstOrDefault(c => c.FollowerId == followerId && c.FollowingId == followingId)==null)
+            {
+                _context.Following.Add(entity);
+                _context.SaveChanges();
+            }
+        }
+        /// <summary>
         /// Gets the users that a user follows
         /// </summary>
         /// <param name="users">The User ID</param>
@@ -138,16 +161,9 @@ namespace TheHub.DataAccess.Repository
                 throw new ArgumentNullException();
             }
             List<User> followedUsers = new List<User>();
-            foreach(var item in entity.Following)
+            foreach(var item in entities)
             {
-                var followedUser = _context.Users.Find(item.FollowingId);
-
-                followedUsers.Add(new User
-                {
-                    FirstName = followedUser.FirstName,
-                    LastName = followedUser.LastName,
-                    UserName = followedUser.UserName
-                });
+                followedUsers.Add(GetById(item.FollowingId));
             }
             return followedUsers;
         }

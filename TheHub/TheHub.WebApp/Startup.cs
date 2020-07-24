@@ -29,6 +29,18 @@ namespace TheHub.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                // defining the policy
+                options.AddPolicy(name: "AllowLocalNgServe",
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("")
+                                        .AllowAnyMethod()
+                                        .AllowAnyHeader()
+                                        .AllowCredentials();
+                                  });
+            });
             services.AddDbContext<Project2Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
             services.AddControllers();
@@ -41,7 +53,8 @@ namespace TheHub.WebApp
             services.AddScoped<ICommentRepo, CommentRepository>();
 
 
-
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen();
 
 
         }
@@ -56,7 +69,19 @@ namespace TheHub.WebApp
 
             app.UseHttpsRedirection();
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "The Hub API V1");
+            });
+
             app.UseRouting();
+
+            app.UseCors("AllowLocalNgServe");
 
             app.UseAuthorization();
 

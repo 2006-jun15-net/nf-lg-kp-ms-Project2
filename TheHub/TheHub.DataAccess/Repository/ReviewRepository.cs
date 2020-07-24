@@ -43,7 +43,12 @@ namespace TheHub.DataAccess.Repository
         /// <param name="id">The Review ID</param>
         public void Delete(int id)
         {
-            _context.Reviews.Remove(_context.Reviews.Find(id));
+            var review = _context.Reviews.Find(id);
+            if(review == null)
+            {
+                throw new ArgumentNullException();
+            }
+            _context.Reviews.Remove(review);
             _context.SaveChanges();
         }
 
@@ -102,7 +107,8 @@ namespace TheHub.DataAccess.Repository
         /// <returns>The list of Reviews</returns>
         public IEnumerable<Review> GetByMediaId(int id)
         {
-            var entities = _context.Reviews.Where(r => r.MediaId == id);
+            var entities = _context.Reviews
+                .Where(r => r.MediaId == id);
             return entities.Select(e => new Review
             {
                 ReviewId = e.ReviewId,
@@ -135,7 +141,7 @@ namespace TheHub.DataAccess.Repository
         {
             var entities = _context.Reviews
                 .Include(r => r.ReviewLikes)
-                .Where(r => r.UserId == id);
+                .Where(r => r.UserId == id).ToList();
             List<Review> reviews = new List<Review>();
 
             foreach(var review in entities)
@@ -183,17 +189,26 @@ namespace TheHub.DataAccess.Repository
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Creates a ReviewLike and increments Likes for the Review if the ReviewLike doesn't already exist
+        /// </summary>
+        /// <param name="reviewId">The Review Id</param>
+        /// <param name="userId">The User Id</param>
         public void CreateLike(int reviewId, int userId)
         {
-            var entity = new ReviewLikes
+            if(_context.ReviewLikes.FirstOrDefault(rl => rl.ReviewId == reviewId && rl.UserId == userId) == null)
             {
-                UserId = userId,
-                ReviewId = reviewId
-            };
-            _context.ReviewLikes.Add(entity);
-            _context.SaveChanges();
-
-
+                var entity = new ReviewLikes
+                {
+                    UserId = userId,
+                    ReviewId = reviewId
+                };
+                var review = _context.Reviews.Find(reviewId);
+                review.Likes++;
+                _context.ReviewLikes.Add(entity);
+                _context.SaveChanges();
+            }
+            
         }
 
     }
