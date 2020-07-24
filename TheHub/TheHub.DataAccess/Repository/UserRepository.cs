@@ -161,7 +161,7 @@ namespace TheHub.DataAccess.Repository
                 throw new ArgumentNullException();
             }
             List<User> followedUsers = new List<User>();
-            foreach(var item in entities)
+            foreach(var item in entity.Following)
             {
                 followedUsers.Add(GetById(item.FollowingId));
             }
