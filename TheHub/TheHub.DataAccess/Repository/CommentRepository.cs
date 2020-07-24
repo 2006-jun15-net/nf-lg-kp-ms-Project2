@@ -42,7 +42,12 @@ namespace TheHub.DataAccess.Repository
         /// <param name="id">The Comment ID</param>
         public void DeleteById(int id)
         {
-            _context.Comments.Remove(_context.Comments.Find(id));
+            var comment = _context.Comments.Find(id);
+            if(comment == null)
+            {
+                throw new ArgumentNullException();
+            }
+            _context.Comments.Remove(comment);
             _context.SaveChanges();
         }
 
@@ -55,7 +60,7 @@ namespace TheHub.DataAccess.Repository
         {
             var entity = _context.Comments
                 .Include(c => c.CommentLikes)
-                .First(c => c.CommentId == id);
+                .FirstOrDefault(c => c.CommentId == id);
             if (entity == null)
             {
                 throw new ArgumentNullException();

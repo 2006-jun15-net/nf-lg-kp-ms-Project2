@@ -16,6 +16,10 @@ namespace TheHub.DataAccess.Repository
             _context = context;
         }
 
+        /// <summary>
+        /// Adds a Genre to the database
+        /// </summary>
+        /// <param name="genre">The Genre</param>
         public void Add(Genre genre)
         {
             var entity = new Model.Genre
@@ -26,12 +30,25 @@ namespace TheHub.DataAccess.Repository
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Deletes a Genre from the database
+        /// </summary>
+        /// <param name="id">The Genre Id</param>
         public void Delete(int id)
         {
-            _context.Genre.Remove(_context.Genre.Find(id));
+            var genre = _context.Genre.Find(id);
+            if(genre == null)
+            {
+                throw new ArgumentNullException();
+            }
+            _context.Genre.Remove(genre);
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Gets all the Genres from the database
+        /// </summary>
+        /// <returns>The Genres</returns>
         public IEnumerable<Genre> GetAll()
         {
             var entity = _context.Genre.ToList();
@@ -42,6 +59,11 @@ namespace TheHub.DataAccess.Repository
             });
         }
 
+        /// <summary>
+        /// Gets a Genre by Id
+        /// </summary>
+        /// <param name="id">The Genre Id</param>
+        /// <returns></returns>
         public Genre GetById(int id)
         {
             var entity = _context.Genre.Find(id);
@@ -56,6 +78,10 @@ namespace TheHub.DataAccess.Repository
             };
         }
 
+        /// <summary>
+        /// Updates a Genre
+        /// </summary>
+        /// <param name="genre">The updated Genre</param>
         public void Update(Genre genre)
         {
             var entity = _context.Genre.Find(genre.GenreId);

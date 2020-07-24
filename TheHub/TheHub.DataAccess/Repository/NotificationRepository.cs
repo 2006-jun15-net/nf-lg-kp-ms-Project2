@@ -43,7 +43,12 @@ namespace TheHub.DataAccess.Repository
         /// <param name="id">The Notification ID</param>
         public void DeleteById(int id)
         {
-            _context.Notifications.Remove(_context.Notifications.Find(id));
+            var notification = _context.Notifications.Find(id);
+            if(notification == null)
+            {
+                throw new ArgumentNullException();
+            }
+            _context.Notifications.Remove(notification);
             _context.SaveChanges();
         }
 
@@ -87,7 +92,7 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="id">The User ID</param>
         /// <returns>The list of Notifications</returns>
-        public IEnumerable<Notification> GetByReciverId(int id)
+        public IEnumerable<Notification> GetByReceiverId(int id)
         {
             var entities = _context.Notifications.Where(n => n.ReciverId == id);
             return entities.Select(e => new Notification

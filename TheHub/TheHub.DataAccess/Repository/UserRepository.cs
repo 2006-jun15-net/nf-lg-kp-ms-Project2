@@ -46,7 +46,12 @@ namespace TheHub.DataAccess.Repository
         /// <param name="id">The User ID</param>
         public void Delete(int id)
         {
-            _context.Users.Remove(_context.Users.Find(id));
+            var user = _context.Users.Find(id);
+            if (user == null)
+            {
+                throw new ArgumentNullException();
+            }
+            _context.Users.Remove(user);
             _context.SaveChanges();
         }
 
@@ -107,7 +112,7 @@ namespace TheHub.DataAccess.Repository
         /// <returns>The list of Followers</returns>
         public IEnumerable<User> GetFollowers(int id)
         {
-            var entities = _context.Following.Where(f => f.FollowingId == id);
+            var entities = _context.Following.Where(f => f.FollowingId == id).ToList();
             List<User> followers = new List<User>();
             foreach (var item in entities)
             {
@@ -124,7 +129,7 @@ namespace TheHub.DataAccess.Repository
         }
 
         /// <summary>
-        /// Add a user that to following list
+        /// Add a user to following list
         /// </summary>
         /// <param name="followerId"></param>
         /// <param name="followingId"></param>
@@ -150,18 +155,10 @@ namespace TheHub.DataAccess.Repository
         {
             var entities = _context.Following.Where(f => f.FollowerId == id).ToList();
 
-
             List<User> followedUsers = new List<User>();
             foreach(var item in entities)
             {
-                followedUsers.Add(GetById(item.FollowingId));//var followedUser = _context.Users.Find(item.FollowingId);
-
-                //followedUsers.Add(new User)
-                //{
-                //    FirstName = followedUser.FirstName,
-                //    LastName = followedUser.LastName,
-                //    UserName = followedUser.UserName
-                //});
+                followedUsers.Add(GetById(item.FollowingId));
             }
             return followedUsers;
         }
@@ -172,7 +169,7 @@ namespace TheHub.DataAccess.Repository
         /// <param name="user">The updated User</param>
         public void Update(User user)
         {
-            var entity = _context.Users.First(c  => c.UserId==user.UserId);
+            var entity = _context.Users.Find(user.UserId);
             if (entity == null)
             {
                 throw new ArgumentNullException();

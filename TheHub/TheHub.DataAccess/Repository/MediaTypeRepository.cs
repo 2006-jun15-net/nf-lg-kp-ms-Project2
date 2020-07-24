@@ -17,6 +17,10 @@ namespace TheHub.DataAccess.Repository
             _context = context;
         }
 
+        /// <summary>
+        /// Adds a MediaType to the database
+        /// </summary>
+        /// <param name="mediatype">The MediaType</param>
         public void Add(MediaType mediatype)
         {
             var entity = new MediaTypes
@@ -27,12 +31,25 @@ namespace TheHub.DataAccess.Repository
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Deletes a MediaType from the database 
+        /// </summary>
+        /// <param name="id">The MediaType Id</param>
         public void Delete(int id)
         {
-            _context.MediaTypes.Remove(_context.MediaTypes.Find(id));
+            var mediaType = _context.MediaTypes.Find(id);
+            if(mediaType == null)
+            {
+                throw new ArgumentNullException();
+            }
+            _context.MediaTypes.Remove(mediaType);
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Gets all the MediaTypes from the database
+        /// </summary>
+        /// <returns>The MediaTypes</returns>
         public IEnumerable<MediaType> GetAll()
         {
             var entity = _context.MediaTypes.ToList();
@@ -43,6 +60,11 @@ namespace TheHub.DataAccess.Repository
             });
         }
 
+        /// <summary>
+        /// Gets a MediaType by its Id
+        /// </summary>
+        /// <param name="id">The MediaType Id</param>
+        /// <returns></returns>
         public MediaType GetById(int id)
         {
             var entity = _context.MediaTypes.Find(id);
@@ -57,6 +79,10 @@ namespace TheHub.DataAccess.Repository
             };
         }
 
+        /// <summary>
+        /// Updates a MediaType
+        /// </summary>
+        /// <param name="mediaType">The updated MediaType</param>
         public void Update(MediaType mediaType)
         {
             var entity = _context.MediaTypes.Find(mediaType.Id);
