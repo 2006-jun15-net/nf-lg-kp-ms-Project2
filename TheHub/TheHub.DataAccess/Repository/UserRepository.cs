@@ -87,7 +87,7 @@ namespace TheHub.DataAccess.Repository
         /// <returns>The User</returns>
         public User GetByUserName(string username)
         {
-            var entity = _context.Users.First(u => u.UserName.Equals(username));
+            var entity = _context.Users.FirstOrDefault(u => u.UserName.Equals(username));
             if (entity == null)
             {
                 throw new ArgumentNullException();

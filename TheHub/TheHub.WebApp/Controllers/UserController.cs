@@ -24,28 +24,44 @@ namespace TheHub.WebApp.Controllers
             _userRepository = userRepository;
         }
 
-        // GET: api/<UserController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        //GET api/user/login
+        [HttpGet("login")]
+        public IActionResult Login(string username, string password)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var user = _userRepository.GetByUserName(username);
+                if(user.Password == password)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                return Unauthorized();
+            }
         }
 
-        // GET api/<UserController>/5
+
+        // GET api/user/5
         [HttpGet("{id}")]
         public IActionResult GetUserById(int id)
         {
             return Ok(_userRepository.GetById(id));
         }
 
-        // GET api/<UserController>/5
+        // GET api/following/1
         [HttpGet("following/{id}")]
         public IActionResult GetFollowing(int id)
         {
             return Ok(_userRepository.GetFollowing(id));
         }
 
-        // GET api/<UserController>/5
+        // GET api/followers/1
         [HttpGet("followers/{id}")]
         public IActionResult GetFollowers(int id)
         {
@@ -54,7 +70,7 @@ namespace TheHub.WebApp.Controllers
 
 
 
-        // POST api/<UserController>
+        // POST api/CreateUser
         [HttpPost("CreateUser")]
         public IActionResult CreateUser([FromBody] User user)
         {
@@ -66,7 +82,7 @@ namespace TheHub.WebApp.Controllers
             
         }
 
-        // Post api/<UserController>/5
+        // Post api/follow/1/1
         [HttpPut("follow/{FollowerId}/{FollowingId}")]
         public IActionResult FollowUser(int FollowerId, int FollowingId)
         {
@@ -75,7 +91,7 @@ namespace TheHub.WebApp.Controllers
         }
 
 
-        // PUT api/<UserController>/5
+        // PUT api/Update/1
         [HttpPut("Update/{id}")]
         public IActionResult UpdateProfile([FromBody][Required] User user, int id)
         {
