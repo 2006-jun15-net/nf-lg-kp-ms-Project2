@@ -202,6 +202,7 @@ namespace TheHub.DataAccess.Repository
             entity.MediaUrl = media.MediaUrl;
             entity.Approved = media.Approved;
             entity.GenreId = media.GenreId;
+            _context.Media.Update(entity);
             _context.SaveChanges();
         }
 
