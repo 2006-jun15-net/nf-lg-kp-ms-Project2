@@ -32,10 +32,10 @@ namespace TheHub.WebApp
             services.AddCors(options =>
             {
                 // defining the policy
-                options.AddPolicy(name: "AllowLocalNgServe",
+                options.AddPolicy(name: "AllowTheHub-site",
                                   builder =>
                                   {
-                                      builder.WithOrigins("")
+                                      builder.WithOrigins("http://thehub-site.azurewebsites.net")
                                         .AllowAnyMethod()
                                         .AllowAnyHeader()
                                         .AllowCredentials();
@@ -81,7 +81,7 @@ namespace TheHub.WebApp
 
             app.UseRouting();
 
-            app.UseCors("AllowLocalNgServe");
+            app.UseCors("AllowTheHub-site");
 
             app.UseAuthorization();
 
