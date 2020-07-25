@@ -126,15 +126,17 @@ namespace TheHub.DataAccess.Repository
 
         public void CreateLike(int commentId, int userId)
         {
-            var entity = new CommentLikes
+            if (_context.CommentLikes.FirstOrDefault(rl => rl.CommentId == commentId && rl.UserId == userId) == null)
             {
-                UserId = userId,
-                CommentId = commentId
-            };
-            _context.CommentLikes.Add(entity);
-            _context.SaveChanges();
-
-
+                var entity = new CommentLikes
+                {
+                    UserId = userId,
+                    CommentId = commentId
+                };
+                _context.CommentLikes.Add(entity);
+                _context.SaveChanges();
+            }
+               
         }
     }
 }
