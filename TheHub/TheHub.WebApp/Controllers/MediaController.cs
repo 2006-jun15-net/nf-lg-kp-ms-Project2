@@ -17,10 +17,12 @@ namespace TheHub.WebApp.Controllers
     {
 
         private readonly IMediaRepo _mediaRepository;
+        private readonly IMediaTypeRepo _mediaTypeRepository;
 
-        public MediaController(IMediaRepo mediaRepository)
+        public MediaController(IMediaRepo mediaRepository, IMediaTypeRepo mediaTypeRepo)
         {
             _mediaRepository = mediaRepository;
+            _mediaTypeRepository = mediaTypeRepo;
         }
         // GET: api/<MediaController>
         
@@ -71,9 +73,9 @@ namespace TheHub.WebApp.Controllers
             else
             {
                 
-                _mediaRepository.Update(currentMedia);
+                _mediaRepository.Update(media);
 
-                return CreatedAtAction(nameof(GetMediaById), new { id = currentMedia.MediaId }, currentMedia);
+                return CreatedAtAction(nameof(GetMediaById), new { id = currentMedia.MediaId }, media);
                 
             }
      
@@ -129,6 +131,25 @@ namespace TheHub.WebApp.Controllers
             else {
                 return Ok(_mediaRepository.GetUnapprovedMedia());
             }
+        }
+
+        [HttpGet("MediaType/{id}")]
+
+        public IActionResult GetByMediaType (int id)
+        {
+            var mediaType = _mediaTypeRepository.GetById(id);
+
+            if (mediaType == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(_mediaRepository.GetByMediaType(mediaType.Name));
+            }
+
+
+
         }
     }
 }
