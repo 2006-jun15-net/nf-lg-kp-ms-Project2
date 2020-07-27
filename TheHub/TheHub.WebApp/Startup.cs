@@ -35,7 +35,9 @@ namespace TheHub.WebApp
                 options.AddPolicy(name: "AllowTheHub-site",
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://thehub-site.azurewebsites.net")
+                                      builder.WithOrigins("http://thehub-site.azurewebsites.net", 
+                                                          "https://thehub-site.azurewebsites.net",
+                                                          "http://localhost:4200")
                                         .AllowAnyMethod()
                                         .AllowAnyHeader()
                                         .AllowCredentials();
