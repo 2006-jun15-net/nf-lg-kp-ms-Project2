@@ -8,7 +8,7 @@ namespace TheHub.Library.Interfaces
     {
         Media GetById(int id);
 
-        IEnumerable<Media> GetByCategory(string category);
+        IEnumerable<Media> GetByMediaType(string mediaType);
 
         Media GetByTitle(string title);
 

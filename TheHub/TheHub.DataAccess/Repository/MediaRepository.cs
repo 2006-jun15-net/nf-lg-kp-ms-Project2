@@ -57,7 +57,7 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="mediaType">The MediaType</param>
         /// <returns>The list of Media</returns>
-        public IEnumerable<Media> GetByCategory(string mediaType)
+        public IEnumerable<Media> GetByMediaType(string mediaType)
         {
             var entity = _context.Media.Where(m => m.MediaTypes.MediaTypesName == mediaType);
             return entity.Select(m => new Media
@@ -67,7 +67,7 @@ namespace TheHub.DataAccess.Repository
                 Composer = m.Composer,
                 Rating = m.Rating,
                 Description = m.Description,
-                MediaTypeId = m.MediaId,
+                MediaTypeId = m.MediaTypesId,
                 MediaUrl = m.MediaUrl,
                 GenreId = m.GenreId,
                 Approved = m.Approved
@@ -202,6 +202,7 @@ namespace TheHub.DataAccess.Repository
             entity.MediaUrl = media.MediaUrl;
             entity.Approved = media.Approved;
             entity.GenreId = media.GenreId;
+            entity.MediaTypesId = media.MediaTypeId;
             _context.SaveChanges();
         }
 
