@@ -38,6 +38,12 @@ namespace TheHub.WebApp.Controllers
             }
             
         }
+        //GET api/review/1/comments
+        [HttpGet("{id}/comments")]
+        public IActionResult GetCommentsByReviewId(int id)
+        {
+            return Ok(_commentRepository.GetByReviewId(id).ToList()); 
+        }
       
         [HttpGet("{id}")]
         public IActionResult getReviewById(int id)
