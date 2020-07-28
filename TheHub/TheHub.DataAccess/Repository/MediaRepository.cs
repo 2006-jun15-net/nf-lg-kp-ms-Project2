@@ -97,6 +97,28 @@ namespace TheHub.DataAccess.Repository
         }
 
         /// <summary>
+        /// get medias by composer
+        /// </summary>
+        /// <param name="composer"></param>
+        /// <returns></returns>
+        public IEnumerable<Media> GetByComposer(string composer)
+        {
+            var entity = _context.Media.Where(m => m.Composer == composer);
+            return entity.Select(m => new Media
+            {
+                MediaId = m.MediaId,
+                MediaName = m.MediaName,
+                Composer = m.Composer,
+                Rating = m.Rating,
+                Description = m.Description,
+                MediaTypeId = m.MediaTypesId,
+                MediaUrl = m.MediaUrl,
+                GenreId = m.GenreId,
+                Approved = m.Approved
+            });
+        }
+
+        /// <summary>
         /// Gets the Media by Id
         /// </summary>
         /// <param name="id">The Media Id</param>

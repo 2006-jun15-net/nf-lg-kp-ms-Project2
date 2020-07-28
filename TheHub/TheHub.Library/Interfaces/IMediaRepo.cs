@@ -16,6 +16,8 @@ namespace TheHub.Library.Interfaces
 
         IEnumerable<Media> GetByRating(int rating);
 
+        IEnumerable<Media> GetByComposer(string composer);
+
         IEnumerable<Media> GetByReviewcount(int reviewCount);
 
         IEnumerable<Media> GetUnapprovedMedia();

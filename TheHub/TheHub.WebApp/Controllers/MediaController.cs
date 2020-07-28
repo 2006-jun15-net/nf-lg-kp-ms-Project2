@@ -46,6 +46,118 @@ namespace TheHub.WebApp.Controllers
             }
         }
 
+        /// <summary>
+        /// get media by title
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        // GET api/<MediaController>
+        [HttpGet("title/{title}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetMediaByTitle(string title)
+        {
+            var currentMedia = _mediaRepository.GetByTitle(title);
+
+            if (currentMedia == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(_mediaRepository.GetByTitle(title));
+            }
+        }
+
+        /// <summary>
+        /// get medias by genre
+        /// </summary>
+        /// <param name="genre"></param>
+        /// <returns></returns>
+        // GET api/<MediaController>/5
+        [HttpGet("genre/{genre}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetMediaByGenre(string genre)
+        {
+            var currentMedia = _mediaRepository.GetByGenre(genre);
+
+            if (currentMedia == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(_mediaRepository.GetByGenre(genre));
+            }
+        }
+
+        /// <summary>
+        /// get medias by number of reviews
+        /// </summary>
+        /// <param name="reviewCount"></param>
+        /// <returns></returns>
+        [HttpGet("reviewcount/{reviewCount}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetMediaByReviewCount(int reviewCount)
+        {
+            var currentMedia = _mediaRepository.GetByReviewcount(reviewCount);
+
+            if (currentMedia == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(_mediaRepository.GetByReviewcount(reviewCount));
+            }
+        }
+
+        /// <summary>
+        /// get medias by number of rating
+        /// </summary>
+        /// <param name="rating"></param>
+        /// <returns></returns>
+        [HttpGet("rating/{rating}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetMediaByRating(int rating)
+        {
+            var currentMedia = _mediaRepository.GetByRating(rating);
+
+            if (currentMedia == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(_mediaRepository.GetByRating(rating));
+            }
+        }
+
+        /// <summary>
+        /// get media by composer
+        /// </summary>
+        /// <param name="composer"></param>
+        /// <returns></returns>
+        [HttpGet("composer/{composer}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetMediaByComposer(string composer)
+        {
+            var currentMedia = _mediaRepository.GetByComposer(composer);
+
+            if (currentMedia == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(_mediaRepository.GetByComposer(composer));
+            }
+        }
+
         // POST api/<MediaController>
         [HttpPost("CreateMedia")]
         [ProducesResponseType(StatusCodes.Status201Created)]
