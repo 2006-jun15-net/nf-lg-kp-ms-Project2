@@ -28,33 +28,43 @@ namespace TheHub.WebApp.Controllers
         }
 
         //GET api/user/login
-        [HttpGet("login")]
-        public IActionResult Login(string username, string password)
+        //[HttpGet("login")]
+        //public IActionResult Login(string username, string password)
+        //{
+        //    try
+        //    {
+        //        var user = _userRepository.GetByUserName(username);
+        //        if(user.Password == password)
+        //        {
+        //            return Ok(user);
+        //        }
+        //        else
+        //        {
+        //            return Unauthorized();
+        //        }
+        //    }
+        //    catch (ArgumentNullException)
+        //    {
+        //        return Unauthorized();
+        //    }
+        //}
+
+
+        // GET api/user
+        [HttpGet]
+        public IActionResult GetUserByEmail(string email)
         {
             try
             {
-                var user = _userRepository.GetByUserName(username);
-                if(user.Password == password)
-                {
-                    return Ok(user);
-                }
-                else
-                {
-                    return Unauthorized();
-                }
+                var user =_userRepository.GetByEmail(email);
+                return Ok(user);
             }
-            catch (ArgumentNullException)
+            catch (Exception)
             {
-                return Unauthorized();
+                return NotFound();
             }
-        }
-
-
-        // GET api/user/5
-        [HttpGet("{id}")]
-        public IActionResult GetUserById(int id)
-        {
-            return Ok(_userRepository.GetById(id));
+            
+            
         }
 
         // GET api/following/1
@@ -74,16 +84,16 @@ namespace TheHub.WebApp.Controllers
 
 
         // POST api/CreateUser
-        [HttpPost("CreateUser")]
-        public IActionResult CreateUser([FromBody] User user)
-        {
-           _userRepository.Add(user);
+        //[HttpPost("CreateUser")]
+        //public IActionResult CreateUser([FromBody] User user)
+        //{
+        //   _userRepository.Add(user);
 
-           var newUser = _userRepository.GetByUserName(user.UserName);
+        //   var newUser = _userRepository.GetByUserName(user.UserName);
 
-            return CreatedAtAction(nameof(GetUserById),new { id = newUser.UserId }, newUser);
+        //    return CreatedAtAction(nameof(GetUserById),new { id = newUser.UserId }, newUser);
             
-        }
+        //}
 
         // Post api/follow/1/1
         [HttpPut("follow/{FollowerId}/{FollowingId}")]
