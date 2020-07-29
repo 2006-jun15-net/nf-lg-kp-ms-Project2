@@ -14,6 +14,7 @@ using TheHub.Library.Interfaces;
 using TheHub.DataAccess.Repository;
 using TheHub.DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
+using Okta.AspNetCore;
 
 namespace TheHub.WebApp
 {
@@ -29,6 +30,17 @@ namespace TheHub.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+                options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+                options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+            })
+            .AddOktaWebApi(new OktaWebApiOptions()
+            {
+                OktaDomain = "https://dev-257351.okta.com"
+            });
+
             services.AddCors(options =>
             {
                 // defining the policy
@@ -85,6 +97,7 @@ namespace TheHub.WebApp
 
             app.UseCors("AllowTheHub-site");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

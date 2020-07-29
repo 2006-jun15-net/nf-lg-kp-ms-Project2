@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TheHub.Library.Interfaces;
 using TheHub.Library.Model;
@@ -12,6 +13,8 @@ using TheHub.Library.Model;
 namespace TheHub.WebApp.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
+
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepo _commentRepository;
