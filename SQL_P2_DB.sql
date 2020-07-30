@@ -123,5 +123,14 @@ VALUES ('Action'), ('Comedy'), ('Drama'), ('Fantasy'), ('Horror'), ('Mystery'), 
 INSERT INTO MediaTypes (MediaTypesName)
 VALUES ('Video Games'), ('Movies'), ('Albums'), ('Books'), ('TV Shows');
 
-SELECT * FROM Genre;
+INSERT INTO Users (FirstName, LastName, UserName, Password, Bio, Email, AdminUser)
+VALUES ('Noah', 'Funtanilla', 'nfun', 'passnfun', 'Hello, I am Noah, I like pie', 'noahfuntanilla6@gmail.com', 'true'),
+    ('Kirti', 'Patel', 'kirti', 'password', 'Hello, I am Kirti, I like cake', 'kirti.bapa@gmail.com', 'true');
+
+INSERT INTO Following (FollowerId, FollowingId)
+VALUES (6, 2), (6, 1), (6, 5), (5, 2), (5, 1), (5, 6), (2, 5), (2, 6), (1, 5), (1, 6);
+
+UPDATE Users SET Email = 'luey714@gmail.com' WHERE UserId = 1;
+
+SELECT * FROM Users;
 
