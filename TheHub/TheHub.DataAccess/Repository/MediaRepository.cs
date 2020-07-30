@@ -57,7 +57,7 @@ namespace TheHub.DataAccess.Repository
         /// </summary>
         /// <param name="mediaType">The MediaType</param>
         /// <returns>The list of Media</returns>
-        public IEnumerable<Media> GetByCategory(string mediaType)
+        public IEnumerable<Media> GetByMediaType(string mediaType)
         {
             var entity = _context.Media.Where(m => m.MediaTypes.MediaTypesName == mediaType);
             return entity.Select(m => new Media
@@ -67,7 +67,7 @@ namespace TheHub.DataAccess.Repository
                 Composer = m.Composer,
                 Rating = m.Rating,
                 Description = m.Description,
-                MediaTypeId = m.MediaId,
+                MediaTypeId = m.MediaTypesId,
                 MediaUrl = m.MediaUrl,
                 GenreId = m.GenreId,
                 Approved = m.Approved
@@ -82,6 +82,28 @@ namespace TheHub.DataAccess.Repository
         public IEnumerable<Media> GetByGenre(string genre)
         {
             var entity = _context.Media.Where(m => m.Genre.GenreName == genre);
+            return entity.Select(m => new Media
+            {
+                MediaId = m.MediaId,
+                MediaName = m.MediaName,
+                Composer = m.Composer,
+                Rating = m.Rating,
+                Description = m.Description,
+                MediaTypeId = m.MediaTypesId,
+                MediaUrl = m.MediaUrl,
+                GenreId = m.GenreId,
+                Approved = m.Approved
+            });
+        }
+
+        /// <summary>
+        /// get medias by composer
+        /// </summary>
+        /// <param name="composer"></param>
+        /// <returns></returns>
+        public IEnumerable<Media> GetByComposer(string composer)
+        {
+            var entity = _context.Media.Where(m => m.Composer == composer);
             return entity.Select(m => new Media
             {
                 MediaId = m.MediaId,
@@ -202,6 +224,7 @@ namespace TheHub.DataAccess.Repository
             entity.MediaUrl = media.MediaUrl;
             entity.Approved = media.Approved;
             entity.GenreId = media.GenreId;
+            entity.MediaTypesId = media.MediaTypeId;
             _context.Media.Update(entity);
             _context.SaveChanges();
         }

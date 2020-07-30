@@ -83,11 +83,11 @@ namespace TheHub.DataAccess.Repository
         /// <summary>
         /// Gets a user from the database without the followers or following
         /// </summary>
-        /// <param name="username">The User UserName</param>
+        /// <param name="email">The User email</param>
         /// <returns>The User</returns>
-        public User GetByUserName(string username)
+        public User GetByEmail(string email)
         {
-            var entity = _context.Users.FirstOrDefault(u => u.UserName.Equals(username));
+            var entity = _context.Users.FirstOrDefault(u => u.Email.Equals(email));
             if (entity == null)
             {
                 throw new ArgumentNullException();

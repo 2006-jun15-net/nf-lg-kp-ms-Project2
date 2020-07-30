@@ -14,6 +14,7 @@ using TheHub.Library.Interfaces;
 using TheHub.DataAccess.Repository;
 using TheHub.DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
+using Okta.AspNetCore;
 
 namespace TheHub.WebApp
 {
@@ -29,13 +30,26 @@ namespace TheHub.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+                options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+                options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+            })
+            .AddOktaWebApi(new OktaWebApiOptions()
+            {
+                OktaDomain = "https://dev-257351.okta.com"
+            });
+
             services.AddCors(options =>
             {
                 // defining the policy
-                options.AddPolicy(name: "AllowLocalNgServe",
+                options.AddPolicy(name: "AllowTheHub-site",
                                   builder =>
                                   {
-                                      builder.WithOrigins("")
+                                      builder.WithOrigins("http://thehub-site.azurewebsites.net", 
+                                                          "https://thehub-site.azurewebsites.net",
+                                                          "http://localhost:4200")
                                         .AllowAnyMethod()
                                         .AllowAnyHeader()
                                         .AllowCredentials();
@@ -52,6 +66,7 @@ namespace TheHub.WebApp
             services.AddScoped<IGenreRepo, GenreRepository>();
             services.AddScoped<ICommentRepo, CommentRepository>();
 
+            //logging
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
@@ -60,8 +75,14 @@ namespace TheHub.WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Project2Context context)
         {
+            // code-first at runtime without migrations;
+            // if the database already exists, it does nothing
+            //    (even if the EF model doesn't match the database, there's no error)
+            // if the database doesn't exist, it wil be created according to the EF model
+            context.Database.EnsureCreated();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -81,8 +102,9 @@ namespace TheHub.WebApp
 
             app.UseRouting();
 
-            app.UseCors("AllowLocalNgServe");
+            app.UseCors("AllowTheHub-site");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

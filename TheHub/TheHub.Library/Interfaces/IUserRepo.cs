@@ -8,7 +8,7 @@ namespace TheHub.Library.Interfaces
     {
         User GetById(int id);
 
-        User GetByUserName(string username);
+        User GetByEmail(string email);
 
         IEnumerable<User> GetFollowers(int id); 
 
