@@ -88,7 +88,8 @@ stages:
         --collect:"XPlat Code Coverage"
         --logger trx
         --results-directory $(Common.TestResultsDirectory)
-        --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover
+        --
+        DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover
       displayName: dotnet test
       workingDirectory: $(solutionPath)
 
