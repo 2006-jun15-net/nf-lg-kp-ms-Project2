@@ -41,6 +41,7 @@ namespace TheHub.Test.Repository
             Assert.Equal("Test bio", savedUser.Bio);
             Assert.Equal("test@email.com", savedUser.Email);
             Assert.Equal("testPW", savedUser.Password);
+            Assert.False(savedUser.AdminUser);
         }
 
         [Fact]
