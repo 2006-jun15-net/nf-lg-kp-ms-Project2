@@ -269,7 +269,7 @@ namespace TheHub.WebApp.Controllers
 
         } 
 
-        [HttpGet("Genre/{id}")]
+        [HttpGet("GenreId/{id}")]
 
         public IActionResult GetGenreById(int id) 
         {
@@ -281,7 +281,7 @@ namespace TheHub.WebApp.Controllers
             }
             else 
             {
-                return Ok(_genreRepository.GetById(id));
+                return Ok(genre);
             }
 
         }
