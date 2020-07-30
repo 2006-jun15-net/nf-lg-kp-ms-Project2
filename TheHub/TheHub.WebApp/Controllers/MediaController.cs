@@ -284,23 +284,7 @@ namespace TheHub.WebApp.Controllers
 
         } 
 
-        [HttpGet("GenreId/{id}")]
-
-        public IActionResult GetGenreById(int id) 
-        {
-            var genre = _genreRepository.GetById(id);
-
-            if (genre == null)
-            {
-                return NotFound();
-            }
-            else 
-            {
-                return Ok(genre);
-            }
-
-        }
-
+        
 
     }
 }
