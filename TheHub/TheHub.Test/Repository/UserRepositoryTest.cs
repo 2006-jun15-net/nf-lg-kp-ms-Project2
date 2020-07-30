@@ -113,7 +113,7 @@ namespace TheHub.Test.Repository
         {
             DbContextOptions<Project2Context> options;
             var builder = new DbContextOptionsBuilder<Project2Context>();
-            builder.UseInMemoryDatabase("Project2InMemory");
+            builder.UseInMemoryDatabase("Project2InMemoryUser");
             options = builder.Options;
             Project2Context project2Context = new Project2Context(options);
             project2Context.Database.EnsureDeleted();

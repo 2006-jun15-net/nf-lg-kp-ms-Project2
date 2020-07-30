@@ -27,7 +27,7 @@ namespace TheHub.Test.Repository
 
             var builder = new DbContextOptionsBuilder<Project2Context>();
 
-            builder.UseInMemoryDatabase("Project2InMemory");
+            builder.UseInMemoryDatabase("Project2InMemoryMedia");
             options = builder.Options;
 
             Project2Context project2Context = new Project2Context(options);
