@@ -31,7 +31,7 @@ namespace TheHub.Test.Repository
 
             //act
             ur.Add(user);
-            User savedUser = ur.GetByUserName(user.UserName);
+            User savedUser = ur.GetById(1);
 
             //assert
             Assert.Equal(1, savedUser.UserId);
@@ -52,10 +52,10 @@ namespace TheHub.Test.Repository
 
             //act
             ur.Add(user);
-            User savedUser = ur.GetByUserName(user.UserName);
+            User savedUser = ur.GetById(1);
             savedUser.FirstName = "updatedUser";
             ur.Update(savedUser);
-            User updatedUser = ur.GetByUserName(user.UserName);
+            User updatedUser = ur.GetById(1);
 
             //assert
             Assert.Equal("updatedUser", updatedUser.FirstName);
@@ -94,19 +94,7 @@ namespace TheHub.Test.Repository
             //assert
             Assert.ThrowsAny<ArgumentNullException>(() => ur.GetById(2));
         }
-        [Fact]
-        public void UserRepository_GetByUserName_ThrowsExceptionWhenUserNameNotFound()
-        {
-            //arrange
-            IUserRepo ur = GetInMemoryUserRepository();
-
-            //act
-            ur.Add(user);
-            //there should be only 1 user with id=1
-
-            //assert
-            Assert.ThrowsAny<ArgumentNullException>(() => ur.GetByUserName("NotExistingUsername"));
-        }
+       
         [Fact]
         public void UserRepository_Update_ThrowsExceptionWhenUserIdNotFound()
         {
@@ -115,7 +103,7 @@ namespace TheHub.Test.Repository
 
             //act
             ur.Add(user);
-            User savedUser = ur.GetByUserName(user.UserName);
+            User savedUser = ur.GetById(1);
             savedUser.UserId = 0;//userId should is 1 in database and changing it to zero will throw exception
             
             //assert
