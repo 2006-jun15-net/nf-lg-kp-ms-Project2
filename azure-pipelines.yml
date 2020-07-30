@@ -75,7 +75,7 @@ stages:
         scannerMode: 'MSBuild'
         projectKey: '2006-jun15-net_nf-lg-kp-ms-Project2'
         projectName: 'nf-lg-kp-ms-Project2'
-        extraProperties: sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
+        extraProperties: sonar.cs.opencover.reportsPaths=$(Common.TestResultsDirectory)
 
     - task: UseDotNet@2
       displayName: dotnet sdk $(sdkVersion)
@@ -88,8 +88,7 @@ stages:
         --collect:"XPlat Code Coverage"
         --logger trx
         --results-directory $(Common.TestResultsDirectory)
-        --
-        DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover
+        --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover
       displayName: dotnet test
       workingDirectory: $(solutionPath)
 
