@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TheHub.Library.Interfaces;
 using TheHub.Library.Model;
@@ -11,6 +12,8 @@ namespace TheHub.WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class ReviewController : ControllerBase
     {
         private readonly ICommentRepo _commentRepository;
@@ -37,6 +40,12 @@ namespace TheHub.WebApp.Controllers
                 return NotFound();
             }
             
+        }
+        //GET api/review/1/comments
+        [HttpGet("{id}/comments")]
+        public IActionResult GetCommentsByReviewId(int id)
+        {
+            return Ok(_commentRepository.GetByReviewId(id).ToList()); 
         }
       
         [HttpGet("{id}")]

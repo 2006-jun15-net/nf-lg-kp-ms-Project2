@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TheHub.Library.Interfaces;
@@ -13,6 +14,7 @@ namespace TheHub.WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MediaController : ControllerBase
     {
 
@@ -20,13 +22,11 @@ namespace TheHub.WebApp.Controllers
         private readonly IMediaTypeRepo _mediaTypeRepository;
         private readonly IGenreRepo _genreRepository;
 
-
-        public MediaController(IMediaRepo mediaRepository, IMediaTypeRepo mediaTypeRepo, IGenreRepo genreRepository)
+        public MediaController(IMediaRepo mediaRepository, IMediaTypeRepo mediaTypeRepo, IGenreRepo genreRepo)
         {
             _mediaRepository = mediaRepository;
             _mediaTypeRepository = mediaTypeRepo;
-            _genreRepository = genreRepository;
-        }
+            _genreRepository = genreRepo;        }
         // GET: api/<MediaController>
         
 
@@ -241,7 +241,7 @@ namespace TheHub.WebApp.Controllers
 
             if (currentMedia == null)
             {
-                return BadRequest();
+                return NotFound();
             }
             else
             {
@@ -282,6 +282,25 @@ namespace TheHub.WebApp.Controllers
 
 
 
+        } 
+
+        [HttpGet("GenreId/{id}")]
+
+        public IActionResult GetGenreById(int id) 
+        {
+            var genre = _genreRepository.GetById(id);
+
+            if (genre == null)
+            {
+                return NotFound();
+            }
+            else 
+            {
+                return Ok(genre);
+            }
+
         }
+
+
     }
 }
