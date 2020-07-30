@@ -66,6 +66,7 @@ namespace TheHub.WebApp
             services.AddScoped<IGenreRepo, GenreRepository>();
             services.AddScoped<ICommentRepo, CommentRepository>();
 
+            //logging
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
@@ -74,8 +75,14 @@ namespace TheHub.WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Project2Context context)
         {
+            // code-first at runtime without migrations;
+            // if the database already exists, it does nothing
+            //    (even if the EF model doesn't match the database, there's no error)
+            // if the database doesn't exist, it wil be created according to the EF model
+            context.Database.EnsureCreated();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

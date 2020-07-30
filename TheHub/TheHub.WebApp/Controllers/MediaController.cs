@@ -20,15 +20,13 @@ namespace TheHub.WebApp.Controllers
 
         private readonly IMediaRepo _mediaRepository;
         private readonly IMediaTypeRepo _mediaTypeRepository;
-
         private readonly IGenreRepo _genreRepository;
 
         public MediaController(IMediaRepo mediaRepository, IMediaTypeRepo mediaTypeRepo, IGenreRepo genreRepo)
         {
             _mediaRepository = mediaRepository;
             _mediaTypeRepository = mediaTypeRepo;
-            _genreRepository = genreRepo;
-        }
+            _genreRepository = genreRepo;        }
         // GET: api/<MediaController>
         
 
@@ -71,6 +69,23 @@ namespace TheHub.WebApp.Controllers
             else
             {
                 return Ok(_mediaRepository.GetByTitle(title));
+            }
+        }
+
+        [HttpGet("genreid/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetGenreById(int id)
+        {
+            var currentGenre = _genreRepository.GetById(id);
+
+            if (currentGenre == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(_genreRepository.GetById(id));
             }
         }
 

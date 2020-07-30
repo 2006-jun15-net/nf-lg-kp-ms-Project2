@@ -1,0 +1,20 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /app/src
+
+# Copy csproj and restore as distinct layers
+COPY TheHub.WebApp/*.csproj TheHub.WebApp/
+COPY TheHub.Test/*.csproj TheHub.Test/
+COPY TheHub.Library/*.csproj TheHub.Library/
+COPY TheHub.DataAccess/*.csproj TheHub.DataAccess/
+COPY *.sln ./
+RUN dotnet restore
+
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish TheHub.WebApp -o ../publish --no-restore
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish ./
+CMD dotnet TheHub.WebApp.dll
