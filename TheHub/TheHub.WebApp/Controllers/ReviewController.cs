@@ -124,15 +124,10 @@ namespace TheHub.WebApp.Controllers
             List<Review> reviews = new List<Review>();
             foreach (var item in following)
             {
-                var Follwingreveiw = _reviewRepository.GetByUserId(item.UserId);
-                foreach(var feedItem in Follwingreveiw)
+                var Follwingreview = _reviewRepository.GetByUserId(item.UserId);
+                foreach(var feedItem in Follwingreview)
                 {
-                    TimeSpan diff1 = DateTime.Now.Subtract(feedItem.ReviewDate);
-                    TimeSpan interval = new TimeSpan(7, 0, 00);
-                    if (interval > diff1)
-                    {
-                        reviews.Add(feedItem);
-                    }
+                   reviews.Add(feedItem);
                 }
             }
             var list = reviews.OrderBy(x => x.ReviewDate).ToList();
