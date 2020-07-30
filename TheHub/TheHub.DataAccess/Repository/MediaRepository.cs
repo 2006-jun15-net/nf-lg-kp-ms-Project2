@@ -195,7 +195,11 @@ namespace TheHub.DataAccess.Repository
         /// <returns>The Media</returns>
         public Media GetByTitle(string title)
         {
-            var entity = _context.Media.First(m => m.MediaName.ToLower().Equals(title.ToLower()));
+            var entity = _context.Media.FirstOrDefault(m => m.MediaName.ToLower().Equals(title.ToLower()));
+            if(entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             return new Media
             {
                 MediaId = entity.MediaId,
@@ -217,6 +221,10 @@ namespace TheHub.DataAccess.Repository
         public void Update(Media media)
         {
             var entity = _context.Media.Find(media.MediaId);
+            if(entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             entity.MediaName = media.MediaName;
             entity.Description = media.Description;
             entity.Composer = media.Composer;
@@ -225,6 +233,7 @@ namespace TheHub.DataAccess.Repository
             entity.Approved = media.Approved;
             entity.GenreId = media.GenreId;
             entity.MediaTypesId = media.MediaTypeId;
+            _context.Media.Update(entity);
             _context.SaveChanges();
         }
 

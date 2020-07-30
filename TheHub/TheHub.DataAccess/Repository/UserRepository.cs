@@ -153,10 +153,15 @@ namespace TheHub.DataAccess.Repository
         /// <returns>The list of followed Users</returns>
         public IEnumerable<User> GetFollowing(int id)
         {
-            var entities = _context.Following.Where(f => f.FollowerId == id).ToList();
-
+            var entity = _context.Users
+                .Include(u => u.Following)
+                .FirstOrDefault(u => u.UserId == id);
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
             List<User> followedUsers = new List<User>();
-            foreach(var item in entities)
+            foreach(var item in entity.Following)
             {
                 followedUsers.Add(GetById(item.FollowingId));
             }
