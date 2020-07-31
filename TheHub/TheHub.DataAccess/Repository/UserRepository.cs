@@ -120,6 +120,7 @@ namespace TheHub.DataAccess.Repository
 
                 followers.Add(new User
                 {
+                    UserId = follower.UserId,
                     FirstName = follower.FirstName,
                     LastName = follower.LastName,
                     UserName = follower.UserName

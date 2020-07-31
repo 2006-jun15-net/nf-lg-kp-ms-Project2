@@ -1,0 +1,67 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: TheHub-deployment
+  labels:
+    app: TheHub
+spec:
+  selector:
+    matchLabels:
+      app: TheHub
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: TheHub
+    spec:
+      containers:
+      - name: TheHub
+        image: mcr.microsoft.com/mssql/server
+        ports:
+        - containerPort: 1433
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: TheHubDB-Pod
+  labels:
+    app: TheHub
+spec:
+  containers:
+  - name: TheHubDB-Container
+    image: mcr.microsoft.com/mssql/server
+    ports:
+    - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: TheHubDB-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 
+    targetPort: 80
+    nodePort: 31000
+  selector:
+    app: TheHub
+
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: TheHubApi-Pod
+  labels:
+    app: TheHub
+spec:
+  containers:
+  - name: TheHubApi-Container
+    image: thehubapi:1.0
+    ports:
+    - containerPort: 80
+---

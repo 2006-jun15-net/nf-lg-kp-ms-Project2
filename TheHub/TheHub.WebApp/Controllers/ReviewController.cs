@@ -12,7 +12,7 @@ namespace TheHub.WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
 
     public class ReviewController : ControllerBase
     {
@@ -120,7 +120,7 @@ namespace TheHub.WebApp.Controllers
         [HttpGet("{id}/getfeed")]
         public IActionResult GetPublicFeed(int id)
         {
-            var following = _userRepository.GetFollowing(id);
+            var following = _userRepository.GetFollowers(id);
             List<Review> reviews = new List<Review>();
             foreach (var item in following)
             {
