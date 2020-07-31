@@ -108,6 +108,7 @@ namespace TheHub.DataAccess.Repository
         public IEnumerable<Review> GetByMediaId(int id)
         {
             var entities = _context.Reviews
+                .Include(r => r.ReviewLikes)
                 .Where(r => r.MediaId == id);
             return entities.Select(e => new Review
             {
@@ -116,7 +117,7 @@ namespace TheHub.DataAccess.Repository
                 Rating = e.Rating,
                 MediaId = e.MediaId,
                 UserId = e.UserId,
-                Likes = e.Likes,
+                Likes = e.ReviewLikes.Count,
                 Content = e.Content
             });
         }
@@ -203,8 +204,6 @@ namespace TheHub.DataAccess.Repository
                     UserId = userId,
                     ReviewId = reviewId
                 };
-                var review = _context.Reviews.Find(reviewId);
-                review.Likes++;
                 _context.ReviewLikes.Add(entity);
                 _context.SaveChanges();
             }
