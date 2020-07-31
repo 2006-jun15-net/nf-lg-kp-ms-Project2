@@ -12,7 +12,7 @@ namespace TheHub.WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
 
     public class ReviewController : ControllerBase
     {
