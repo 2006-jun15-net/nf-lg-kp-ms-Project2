@@ -123,7 +123,11 @@ namespace TheHub.DataAccess.Repository
                     UserId = follower.UserId,
                     FirstName = follower.FirstName,
                     LastName = follower.LastName,
-                    UserName = follower.UserName
+                    UserName = follower.UserName,
+                    Picture = follower.Picture,
+                    Bio = follower.Bio,
+                    Email = follower.Email
+           
                 });
             }
             return followers;
