@@ -165,7 +165,7 @@ namespace TheHub.DataAccess.Repository
                     Rating = review.Rating,
                     MediaId = review.MediaId,
                     UserId = review.UserId,
-                    Likes = review.Likes,
+                    Likes = review.ReviewLikes.Count,
                     Content = review.Content,
                     Likers = likers
                 });
