@@ -1,0 +1,34 @@
+	apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: TheHub-api
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: TheHub
+      role: api
+  template:
+    metadata:
+      labels:
+        app: TheHub
+        role: api
+    spec:
+      containers:
+      - name: api
+        image: project2-TheHubapi:1.0
+        env:
+        - name: ConnectionStrings__AzureSql
+          value: Server=tcp:1433;Initial Catalog=TheHubApi;User ID=sa;Password=Pass@word
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 1
+            memory: 512Mi
