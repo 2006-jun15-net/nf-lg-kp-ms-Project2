@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: TheHub-frontend
+  labels:
+    app: TheHub
+    role: frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: TheHub
+    role: frontend
+  ports:
+  - port: 80
